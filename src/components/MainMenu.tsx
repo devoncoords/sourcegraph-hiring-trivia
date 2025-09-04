@@ -10,13 +10,13 @@ export default function MainMenu({ onHostGame, onJoinGame }: MainMenuProps) {
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-6 text-vermilion-500">
+          <h1 className="text-5xl font-bold mb-6 text-vermilion-500 font-display">
             🎯 Sourcegraph Hiring Trivia
           </h1>
-          <p className="text-xl text-gray-300 mb-4">
+          <p className="text-xl text-gray-300 mb-4 font-body">
             Test your hiring knowledge across 5 exciting rounds!
           </p>
-          <p className="text-lg text-vermilion-400">
+          <p className="text-lg text-vermilion-400 font-ui">
             Multiplayer • Real-time • Mobile-friendly
           </p>
         </div>

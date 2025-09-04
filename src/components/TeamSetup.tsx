@@ -53,13 +53,13 @@ export default function TeamSetup({ onTeamsCreated }: TeamSetupProps) {
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4 text-vermilion-500">
+          <h1 className="text-4xl font-bold mb-4 text-vermilion-500 font-display">
             🎯 Sourcegraph Hiring Trivia
           </h1>
-          <p className="text-xl text-gray-300 mb-2">
+          <p className="text-xl text-gray-300 mb-2 font-body">
             Test your hiring knowledge across 5 rounds of questions!
           </p>
-          <p className="text-lg text-vermilion-400">
+          <p className="text-lg text-vermilion-400 font-ui">
             Powered by Amp & Sourcegraph
           </p>
         </div>

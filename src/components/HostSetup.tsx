@@ -78,13 +78,13 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4 text-vermilion-500">
+          <h1 className="text-4xl font-bold mb-4 text-vermilion-500 font-display">
             🎯 Host Trivia Game
           </h1>
-          <p className="text-xl text-gray-300 mb-2">
+          <p className="text-xl text-gray-300 mb-2 font-body">
             Create a multiplayer Sourcegraph Hiring Trivia game!
           </p>
-          <p className="text-lg text-vermilion-400">
+          <p className="text-lg text-vermilion-400 font-ui">
             Teams will join using their devices
           </p>
         </div>

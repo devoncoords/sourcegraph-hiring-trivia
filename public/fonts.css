@@ -1,0 +1,38 @@
+/* PolySans Font Family - Local Hosting Option */
+/* 
+If you have access to PolySans font files, place them in public/fonts/ and uncomment:
+
+@font-face {
+  font-family: 'PolySans';
+  src: url('./fonts/PolySans-Regular.woff2') format('woff2'),
+       url('./fonts/PolySans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PolySans';
+  src: url('./fonts/PolySans-Medium.woff2') format('woff2'),
+       url('./fonts/PolySans-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PolySans';
+  src: url('./fonts/PolySans-Bold.woff2') format('woff2'),
+       url('./fonts/PolySans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* Fallback fonts that match PolySans characteristics */
+.polysans-fallback {
+  font-family: 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-feature-settings: 'liga' 1, 'kern' 1;
+  font-optical-sizing: auto;
+}
