@@ -1,40 +1,62 @@
 'use client';
 
 import { useState } from 'react';
-import { Team } from '@/types';
-import TeamSetup from '@/components/TeamSetup';
-import GameBoard from '@/components/GameBoard';
-import FinalResults from '@/components/FinalResults';
+import MainMenu from '@/components/MainMenu';
+import HostSetup from '@/components/HostSetup';
+import JoinGame from '@/components/JoinGame';
+import MultiplayerGameBoard from '@/components/MultiplayerGameBoard';
+
+type AppState = 'menu' | 'host-setup' | 'join-game' | 'playing';
 
 export default function Home() {
-  const [gameState, setGameState] = useState<'setup' | 'playing' | 'results'>('setup');
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [appState, setAppState] = useState<AppState>('menu');
+  const [gameId, setGameId] = useState<string | null>(null);
+  const [gameCode, setGameCode] = useState<string | null>(null);
+  const [isHost, setIsHost] = useState(false);
 
-  const handleTeamsCreated = (newTeams: Team[]) => {
-    setTeams(newTeams);
-    setGameState('playing');
+  const handleHostGame = () => {
+    setAppState('host-setup');
   };
 
-  const handleGameComplete = (finalTeams: Team[]) => {
-    setTeams(finalTeams);
-    setGameState('results');
+  const handleJoinGame = () => {
+    setAppState('join-game');
   };
 
-  const handlePlayAgain = () => {
-    setGameState('setup');
-    setTeams([]);
+  const handleGameCreatedOrJoined = (id: string, code: string, host: boolean) => {
+    setGameId(id);
+    setGameCode(code);
+    setIsHost(host);
+    setAppState('playing');
   };
 
-  if (gameState === 'setup') {
-    return <TeamSetup onTeamsCreated={handleTeamsCreated} />;
+  const handleBackToMain = () => {
+    setAppState('menu');
+    setGameId(null);
+    setGameCode(null);
+    setIsHost(false);
+  };
+
+  if (appState === 'menu') {
+    return <MainMenu onHostGame={handleHostGame} onJoinGame={handleJoinGame} />;
   }
 
-  if (gameState === 'playing') {
-    return <GameBoard teams={teams} onGameComplete={handleGameComplete} />;
+  if (appState === 'host-setup') {
+    return <HostSetup onGameCreated={handleGameCreatedOrJoined} />;
   }
 
-  if (gameState === 'results') {
-    return <FinalResults teams={teams} onPlayAgain={handlePlayAgain} />;
+  if (appState === 'join-game') {
+    return <JoinGame onGameJoined={handleGameCreatedOrJoined} onBackToMain={handleBackToMain} />;
+  }
+
+  if (appState === 'playing' && gameId) {
+    return (
+      <MultiplayerGameBoard 
+        gameId={gameId} 
+        gameCode={gameCode}
+        isHost={isHost} 
+        onGameEnd={handleBackToMain} 
+      />
+    );
   }
 
   return null;

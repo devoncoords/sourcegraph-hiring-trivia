@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Game {
+  id              String   @id @default(cuid())
+  code            String   @unique // 6-digit join code
+  hostName        String
+  currentRound    Int      @default(0)
+  currentQuestion Int      @default(0)
+  gamePhase       GamePhase @default(LOBBY)
+  timerEndsAt     DateTime?
+  showResults     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  teams   Team[]
+  answers Answer[]
+  
+  @@map("games")
+}
+
+model Team {
+  id     String @id @default(cuid())
+  gameId String
+  name   String
+  score  Int    @default(0)
+  color  String @default("#ff5544") // vermilion default
+  
+  game    Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  answers Answer[]
+  
+  @@map("teams")
+}
+
+model Answer {
+  id          String   @id @default(cuid())
+  gameId      String
+  teamId      String
+  roundId     Int
+  questionId  Int
+  answerIndex Int
+  isCorrect   Boolean
+  pointsAwarded Int   @default(0)
+  submittedAt DateTime @default(now())
+  
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  
+  @@unique([gameId, teamId, roundId, questionId])
+  @@map("answers")
+}
+
+enum GamePhase {
+  LOBBY
+  PLAYING
+  BETWEEN_ROUNDS
+  RESULTS
+  FINISHED
+}
