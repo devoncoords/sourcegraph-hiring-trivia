@@ -1,5 +1,7 @@
 'use client';
 
+import QRCodeGenerator from './QRCodeGenerator';
+
 interface GameLobbyProps {
   game: any;
   gameCode: string | null;
@@ -17,14 +19,28 @@ export default function GameLobby({ game, gameCode, isHost, onStartGame, onLeave
             🎯 Game Lobby
           </h1>
           {gameCode && (
-            <div className="bg-vermilion-500 rounded-lg p-6 mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Join Code:</h2>
-              <p className="text-4xl font-mono text-white font-bold tracking-widest">
-                {gameCode}
-              </p>
-              <p className="text-white mt-2">
-                Share this code with teams to join the game
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-vermilion-500 rounded-lg p-6">
+                <h2 className="text-2xl font-bold text-white mb-2">Join Code:</h2>
+                <p className="text-4xl font-mono text-white font-bold tracking-widest">
+                  {gameCode}
+                </p>
+                <p className="text-white mt-2">
+                  Share this code with teams to join the game
+                </p>
+              </div>
+              
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                <h3 className="text-xl font-bold text-white mb-4 text-center">
+                  📱 Scan to Join
+                </h3>
+                <div className="flex justify-center">
+                  <QRCodeGenerator gameCode={gameCode} size={180} />
+                </div>
+                <p className="text-gray-300 text-sm mt-3 text-center">
+                  Scan with phone camera to join instantly
+                </p>
+              </div>
             </div>
           )}
         </div>

@@ -1,17 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface JoinGameProps {
   onGameJoined: (gameId: string, gameCode: string, isHost: boolean) => void;
   onBackToMain: () => void;
+  initialGameCode?: string | null;
 }
 
-export default function JoinGame({ onGameJoined, onBackToMain }: JoinGameProps) {
-  const [gameCode, setGameCode] = useState('');
+export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }: JoinGameProps) {
+  const [gameCode, setGameCode] = useState(initialGameCode || '');
   const [isJoining, setIsJoining] = useState(false);
 
-  const joinGame = async () => {
+  const joinGame = useCallback(async () => {
     if (!gameCode.trim()) {
       alert('Please enter a game code!');
       return;
@@ -43,7 +44,14 @@ export default function JoinGame({ onGameJoined, onBackToMain }: JoinGameProps) 
     } finally {
       setIsJoining(false);
     }
-  };
+  }, [gameCode, onGameJoined]);
+
+  // Auto-join if we have an initial game code from QR scan
+  useEffect(() => {
+    if (initialGameCode) {
+      joinGame();
+    }
+  }, [initialGameCode, joinGame]);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
