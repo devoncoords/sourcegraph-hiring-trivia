@@ -55,7 +55,7 @@ export const triviaRounds: Round[] = [
           "Ignore it completely"
         ],
         correctAnswer: 2,
-        explanation: "Following proper escalation procedures by notifying the recruiter through appropriate channels is the professional approach."
+        explanation: "Following proper escalation procedures by notifying the recruiter through appropriate channels is the professional approach. See handbook: https://www.notion.so/sourcegraph/Common-interview-scenarios-and-escalation-process-6d27ede9395c478cae64b6defe5826a7?source=copy_link#8b8ad92a0ec044d084b22e3c6ffdd81d"
       },
       {
         id: 6,
@@ -66,8 +66,8 @@ export const triviaRounds: Round[] = [
           "What motivates you?",
           "Are you married?"
         ],
-        correctAnswer: 3,
-        explanation: "Asking about marital status is illegal as it can lead to discrimination based on personal relationships."
+        correctAnswer: 0,
+        explanation: "Asking about graduation year can reveal age and lead to age discrimination. See handbook: https://www.notion.so/sourcegraph/Interview-Training-fef9408527084f258cfbf4fd651e95ac?source=copy_link#b4899eb58e2a45a0887411df78cf62b8"
       },
       {
         id: 7,
@@ -80,7 +80,7 @@ export const triviaRounds: Round[] = [
           "Strong No"
         ],
         correctAnswer: 2,
-        explanation: "Standard hiring recommendations are Strong Yes, Yes, No, and Strong No. 'Neutral' is not typically used as it doesn't provide clear direction."
+        explanation: "Standard hiring recommendations are Strong Yes, Yes, No, and Strong No. 'Neutral' is not typically used as it doesn't provide clear direction. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#4a837097be8841e2b5c76d27c4d29149"
       },
       {
         id: 8,
@@ -93,7 +93,7 @@ export const triviaRounds: Round[] = [
           "Tie the feedback back to the job description"
         ],
         correctAnswer: 0,
-        explanation: "Feedback should typically be given verbally first, either during a call or in person, rather than solely through email which can seem impersonal."
+        explanation: "Feedback should typically be given verbally first, either during a call or in person, rather than solely through email which can seem impersonal. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#d5096a5979774476be4d2945cc3afa7a"
       }
     ]
   },
