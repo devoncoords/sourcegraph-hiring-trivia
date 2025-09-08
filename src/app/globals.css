@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('/fonts.css');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
@@ -43,21 +44,61 @@ body {
   font-feature-settings: 'liga' 1, 'kern' 1;
 }
 
-/* Enhanced typography for PolySans-style versatility */
+/* Enhanced typography for PolySans variable font */
 .font-display {
   font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 700;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .font-body {
   font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 400;
   font-weight: 400;
   line-height: 1.6;
 }
 
 .font-ui {
   font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 500;
   font-weight: 500;
   letter-spacing: -0.01em;
+}
+
+/* Additional PolySans weight utilities */
+.font-polysans-thin {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 200;
+  font-weight: 200;
+}
+
+.font-polysans-light {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 300;
+  font-weight: 300;
+}
+
+.font-polysans-medium {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 500;
+  font-weight: 500;
+}
+
+.font-polysans-semibold {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 600;
+  font-weight: 600;
+}
+
+.font-polysans-bold {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 700;
+  font-weight: 700;
+}
+
+.font-polysans-extrabold {
+  font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
+  font-variation-settings: 'wght' 800;
+  font-weight: 800;
 }
