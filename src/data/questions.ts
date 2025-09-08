@@ -47,15 +47,15 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 5,
-        text: "A candidate shows up 10 minutes late without notice. Do you:",
+        text: "A candidate does not show up for the interview in the first 5 minutes. What is your next course of action?",
         options: [
-          "End the interview immediately",
-          "Proceed but make note of it",
-          "Ask them to reschedule",
+          "End the interview",
+          "Send an angry email",
+          "Send a message in the private Slack channel for the position and tag the Recruiter",
           "Ignore it completely"
         ],
-        correctAnswer: 1,
-        explanation: "Professional approach is to proceed while noting the punctuality issue for evaluation."
+        correctAnswer: 2,
+        explanation: "Following proper escalation procedures by notifying the recruiter through appropriate channels is the professional approach."
       },
       {
         id: 6,
@@ -64,34 +64,36 @@ export const triviaRounds: Round[] = [
           "What year did you graduate?",
           "What are your salary expectations?",
           "What motivates you?",
-          "Do you have children?"
+          "Are you married?"
         ],
         correctAnswer: 3,
-        explanation: "Asking about family status, including children, is illegal as it can lead to discrimination."
+        explanation: "Asking about marital status is illegal as it can lead to discrimination based on personal relationships."
       },
       {
         id: 7,
-        text: "During a technical screen, the candidate solves the problem differently than expected. What's the right next step?",
+        text: "Which one of these is not an overall hiring recommendation?",
         options: [
-          "Tell them they're wrong",
-          "Ask them to explain their approach",
-          "Move to the next question",
-          "End the interview"
+          "Strong Yes",
+          "Yes",
+          "Neutral",
+          "No",
+          "Strong No"
         ],
-        correctAnswer: 1,
-        explanation: "Understanding their thought process is more valuable than getting the 'expected' answer."
+        correctAnswer: 2,
+        explanation: "Standard hiring recommendations are Strong Yes, Yes, No, and Strong No. 'Neutral' is not typically used as it doesn't provide clear direction."
       },
       {
         id: 8,
-        text: "What's the best way to handle a candidate who seems nervous?",
+        text: "A candidate asks you for feedback. What is not a best practice for giving candidate feedback?",
         options: [
-          "Point out their nervousness",
-          "Speed up the interview",
-          "Create a welcoming environment",
-          "Skip the hard questions"
+          "Send them an email with feedback",
+          "Thank the candidate for their time",
+          "Start by discussing the positives",
+          "Be specific when providing feedback",
+          "Tie the feedback back to the job description"
         ],
-        correctAnswer: 2,
-        explanation: "A welcoming environment helps candidates perform at their best and gives you better data."
+        correctAnswer: 0,
+        explanation: "Feedback should typically be given verbally first, either during a call or in person, rather than solely through email which can seem impersonal."
       }
     ]
   },
