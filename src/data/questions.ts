@@ -62,12 +62,16 @@ export const triviaRounds: Round[] = [
         text: "Which of these is an illegal interview question?",
         options: [
           "What year did you graduate?",
-          "What are your salary expectations?",
-          "What motivates you?",
-          "Are you married?"
+          "What is your current compensation?",
+          "Where are you from?",
+          "What do you like to do in your spare time?",
+          "Are you in a relationship?",
+          "How old are your children?",
+          "What does your partner do for a living?",
+          "All of the above"
         ],
-        correctAnswer: 0,
-        explanation: "Asking about graduation year can reveal age and lead to age discrimination. See handbook: https://www.notion.so/sourcegraph/Interview-Training-fef9408527084f258cfbf4fd651e95ac?source=copy_link#b4899eb58e2a45a0887411df78cf62b8"
+        correctAnswer: 7,
+        explanation: "All of these questions are illegal as they can lead to discrimination based on age, national origin, marital status, family status, or other protected characteristics. See handbook: https://www.notion.so/sourcegraph/Interview-Training-fef9408527084f258cfbf4fd651e95ac?source=copy_link#b4899eb58e2a45a0887411df78cf62b8"
       },
       {
         id: 7,
