@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { formatQuestionText } from '@/utils/formatText';
 
 interface PlayerViewProps {
   game: any;
@@ -214,7 +215,7 @@ export default function PlayerView({
 
         {/* Question */}
         <div className="bg-gray-900 rounded-lg p-6 mb-6 border border-gray-800">
-          <h2 className="text-xl font-semibold mb-6 text-center">{currentQuestion.text}</h2>
+          <h2 className="text-xl font-semibold mb-6 text-center">{formatQuestionText(currentQuestion.text)}</h2>
           
           <div className="space-y-3">
             {currentQuestion.options.map((option: string, index: number) => (

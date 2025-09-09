@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { formatQuestionText } from '@/utils/formatText';
 
 interface HostControlsProps {
   game: any;
@@ -196,7 +197,7 @@ export default function HostControls({
 
         {/* Question Display */}
         <div className="bg-gray-900 rounded-lg p-6 mb-6 border border-gray-800">
-          <h2 className="text-2xl font-semibold mb-6 text-center">{currentQuestion.text}</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-center">{formatQuestionText(currentQuestion.text)}</h2>
           <div className="grid gap-4">
             {currentQuestion.options.map((option: string, index: number) => (
               <div

@@ -88,7 +88,7 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 8,
-        text: "A candidate asks you for feedback. What is not a best practice for giving candidate feedback?",
+        text: "A candidate asks you for feedback. What is *not* a best practice for giving candidate feedback?",
         options: [
           "Send them an email with feedback",
           "Thank the candidate for their time",
@@ -97,7 +97,7 @@ export const triviaRounds: Round[] = [
           "Tie the feedback back to the job description"
         ],
         correctAnswer: 0,
-        explanation: "Feedback should typically be given verbally first, either during a call or in person, rather than solely through email which can seem impersonal. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#d5096a5979774476be4d2945cc3afa7a"
+        explanation: "Provide feedback verbally, not in writing. Providing verbal feedback gives the candidate one final personal touch-point with you. It also reduces the likelihood of having your exact words used against you. We never provide individualized feedback in writing. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#d5096a5979774476be4d2945cc3afa7a"
       }
     ]
   },

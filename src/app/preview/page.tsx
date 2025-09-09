@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { triviaRounds } from '@/data/questions';
+import { formatQuestionText } from '@/utils/formatText';
 
 export default function QuestionPreview() {
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
@@ -105,7 +106,7 @@ export default function QuestionPreview() {
           </div>
 
           <div className="bg-gray-800 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-semibold mb-4 font-ui">{currentQuestion.text}</h3>
+            <h3 className="text-xl font-semibold mb-4 font-ui">{formatQuestionText(currentQuestion.text)}</h3>
             <div className="space-y-3">
               {currentQuestion.options.map((option, index) => (
                 <div
