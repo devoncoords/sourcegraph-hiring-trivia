@@ -10,7 +10,7 @@ export default function MainMenu({ onHostGame, onJoinGame }: MainMenuProps) {
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-6 text-vermilion-500 font-display">
+          <h1 className="text-5xl font-bold mb-6 text-vermilion-500 font-display polysans-test">
             🎯 Sourcegraph Hiring Trivia
           </h1>
           <p className="text-xl text-gray-300 mb-4 font-body">

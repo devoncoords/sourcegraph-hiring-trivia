@@ -1,7 +1,25 @@
 @import "tailwindcss";
-@import url('/fonts.css');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* PolySans Font Family - Variable Font */
+@font-face {
+  font-family: 'PolySans';
+  src: url('/fonts/PolySansGX.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  font-variation-settings: 'wght' 400;
+}
+
+@font-face {
+  font-family: 'PolySans';
+  src: url('/fonts/PolySansItalicGX.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+  font-variation-settings: 'wght' 400;
+}
 
 :root {
   --background: #0a0a0a;
@@ -101,4 +119,12 @@ body {
   font-family: 'PolySans', 'Manrope', 'Source Sans 3', system-ui, sans-serif;
   font-variation-settings: 'wght' 800;
   font-weight: 800;
+}
+
+/* Force PolySans loading test */
+.polysans-test {
+  font-family: 'PolySans' !important;
+  font-variation-settings: 'wght' 600 !important;
+  font-weight: 600 !important;
+  color: #ff5544 !important;
 }
