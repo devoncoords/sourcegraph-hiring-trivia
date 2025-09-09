@@ -75,16 +75,15 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 7,
-        text: "Which one of these is not an overall hiring recommendation?",
+        text: "Which one of these is *not* an overall hiring recommendation?",
         options: [
           "Strong Yes",
           "Yes",
-          "Neutral",
           "No",
           "Strong No"
         ],
-        correctAnswer: 2,
-        explanation: "Standard hiring recommendations are Strong Yes, Yes, No, and Strong No. 'Neutral' is not typically used as it doesn't provide clear direction. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#4a837097be8841e2b5c76d27c4d29149"
+        correctAnswer: 3,
+        explanation: "Standard hiring recommendations in Greenhouse, our ATS, are Strong Yes, Yes, No, and Definitely Not. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#4a837097be8841e2b5c76d27c4d29149"
       },
       {
         id: 8,
