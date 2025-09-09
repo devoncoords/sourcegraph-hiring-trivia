@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 interface MainMenuProps {
   onHostGame: () => void;
   onJoinGame: () => void;
@@ -67,8 +69,16 @@ export default function MainMenu({ onHostGame, onJoinGame }: MainMenuProps) {
           </div>
         </div>
 
-        <div className="mt-8 text-center text-sm text-gray-400">
-          <p>Powered by <span className="text-vermilion-500 font-semibold">Amp</span> & <span className="text-blue-400 font-semibold">Sourcegraph</span></p>
+        <div className="mt-8 text-center">
+          <Link 
+            href="/preview"
+            className="inline-block px-4 py-2 text-sm bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors mb-4"
+          >
+            📝 Preview Questions (Admin)
+          </Link>
+          <div className="text-sm text-gray-400">
+            <p>Powered by <span className="text-vermilion-500 font-semibold">Amp</span> & <span className="text-blue-400 font-semibold">Sourcegraph</span></p>
+          </div>
         </div>
       </div>
     </div>
