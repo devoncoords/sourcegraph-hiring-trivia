@@ -98,8 +98,15 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
   const handleTimeUp = useCallback(async () => {
     if (isCreatingTeam) return;
 
-    // Auto-generate team name based on existing teams
-    const defaultName = `Team ${(gameData?.teams?.length || 0) + 1}`;
+    // Auto-generate team name from predefined list
+    const defaultNames = ['Rust', 'Scala', 'C++', 'JetBrains'];
+    const existingNames = gameData?.teams?.map((t: any) => t.name) || [];
+    const availableNames = defaultNames.filter(name => !existingNames.includes(name));
+    
+    const defaultName = availableNames.length > 0 
+      ? availableNames[0] 
+      : `Team ${(gameData?.teams?.length || 0) + 1}`;
+    
     setTeamName(defaultName);
     
     // Auto-submit with default name
@@ -187,6 +194,13 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
             </div>
             <p className="text-gray-400">
               Choose a unique team name quickly!
+            </p>
+          </div>
+
+          <div className="bg-orange-900 rounded-lg p-4 mb-6 border border-orange-700">
+            <h3 className="text-orange-200 font-semibold mb-2">⚠️ Warning:</h3>
+            <p className="text-orange-100 text-sm">
+              If you are too slow to come up with a team name, you will automatically get assigned one of these team names: <span className="font-semibold">Rust</span>, <span className="font-semibold">Scala</span>, <span className="font-semibold">C++</span>, or <span className="font-semibold">JetBrains</span>.
             </p>
           </div>
 
