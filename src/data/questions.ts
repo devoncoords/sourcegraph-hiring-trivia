@@ -102,7 +102,7 @@ export const triviaRounds: Round[] = [
   },
   {
     id: 3,
-    title: "Data & Metrics - Trevor",
+    title: "Data & Metrics",
     theme: "Numbers that matter in hiring",
     emoji: "🕹️",
     pointsPerQuestion: 10,
@@ -110,7 +110,7 @@ export const triviaRounds: Round[] = [
       {
         id: 9,
         text: "What is the average time-to-hire for roles at Sourcegraph over the past two fiscal years?",
-        options: ["33", "40", "45", "62"],
+        options: ["33 days", "40 days", "45 days", "62 days"],
         correctAnswer: 1,
         explanation: "Across all roles the average was 40 days."
       },
@@ -119,50 +119,17 @@ export const triviaRounds: Round[] = [
         text: "How many candidates does a recruiter screen for every 1 hire at Sourcegraph?",
         options: ["6", "8", "14", "21"],
         correctAnswer: 3,
-        explanation: "Roughly 21 screens are needed per hire."
+        explanation: "Roughly 21 candidates are screened for every hire at Sourcegraph."
       },
       {
         id: 11,
         text: "How many applicants are there for every hire at Sourcegraph?",
         options: ["385", "624", "1,062", "1,450"],
         correctAnswer: 1,
-        explanation: "About 624 applicants convert to one hire."
+        explanation: "Approximately 624 applicants are needed for every hire at Sourcegraph."
       },
       {
         id: 12,
-        text: "How many candidates did we interview last fiscal year?",
-        options: ["288", "590", "746", "1,287"],
-        correctAnswer: 3,
-        explanation: "We interviewed 1,287 candidates last year."
-      },
-      {
-        id: 13,
-        text: "Which source produced the most hires over the past two fiscal years?",
-        options: [
-          "Sourcing via LinkedIn Recruiter",
-          "Third-party job boards (LinkedIn, Hacker News, etc.)",
-          "Applications directly from our careers page",
-          "Referrals"
-        ],
-        correctAnswer: 0,
-        explanation: "LinkedIn Recruiter outreach generated the most hires."
-      },
-      {
-        id: 14,
-        text: "What % of our hires came from referrals?",
-        options: ["5%", "11%", "23%", "32%"],
-        correctAnswer: 2,
-        explanation: "Referrals accounted for 23 % of hires."
-      },
-      {
-        id: 15,
-        text: "What was our average response rate on LinkedIn Recruiter?",
-        options: ["9%", "14%", "17%", "22%"],
-        correctAnswer: 3,
-        explanation: "Average InMail response rate was 22 %."
-      },
-      {
-        id: 16,
         text: "Which non-recruiting teammate spent the most time interviewing over the past two fiscal years?",
         options: [
           "Quinn Slack",
@@ -173,19 +140,7 @@ export const triviaRounds: Round[] = [
           "Enrique Gonzales"
         ],
         correctAnswer: 4,
-        explanation: "Jon Kishpaugh logged the most interview hours."
-      },
-      {
-        id: 17,
-        text: "How many hours did Jon spend interviewing?",
-        options: [
-          "52 hours (43 candidates)",
-          "67 hours (55 candidates)",
-          "90 hours (75 candidates)",
-          "120 hours (99 candidates)"
-        ],
-        correctAnswer: 2,
-        explanation: "He spent about 90 hours interviewing 75 candidates."
+        explanation: "Jon Kishpaugh has dedicated the most interview time among non-recruiting teammates over the past two fiscal years."
       }
     ]
   },
