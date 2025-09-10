@@ -47,15 +47,15 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 5,
-        text: "A candidate does not show up for the interview in the first 5 minutes. What is your next course of action?",
+        text: "What % of our hires came from referrals?",
         options: [
-          "End the interview",
-          "Send an angry email",
-          "Send a message in the private Slack channel for the position and tag the Recruiter",
-          "Ignore it completely"
+          "5%",
+          "11%",
+          "23%",
+          "32%"
         ],
         correctAnswer: 2,
-        explanation: "Following proper escalation procedures by notifying the recruiter through appropriate channels is the professional approach. See handbook: https://www.notion.so/sourcegraph/Common-interview-scenarios-and-escalation-process-6d27ede9395c478cae64b6defe5826a7?source=copy_link#8b8ad92a0ec044d084b22e3c6ffdd81d"
+        explanation: "23% of our hires came from referrals. Learn how to submit a referral: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
       },
       {
         id: 6,
