@@ -10,31 +10,31 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 1,
-        text: "Candidates decide within the first ___ minutes if they're interested in the role.",
-        options: ["5 minutes", "15 minutes", "30 minutes", "60 minutes"],
-        correctAnswer: 0,
-        explanation: "Studies show candidates form their impression within the first 5 minutes of an interview."
+        text: "Fact or Fiction: On average, 40% of candidates who start a job application actually finish it.",
+        options: ["Fact", "Fiction"],
+        correctAnswer: 1,
+        explanation: "Fiction: The reality is much lower — only about 30% of candidates finish an application."
       },
       {
         id: 2,
-        text: "True or False: The average recruiter looks at a resume for less than 10 seconds.",
-        options: ["True", "False"],
+        text: "Fact or Fiction: Recruiters, on average, spend less than 10 seconds reviewing each resume.",
+        options: ["Fact", "Fiction"],
         correctAnswer: 0,
-        explanation: "Research indicates recruiters spend about 6-8 seconds on initial resume screening."
+        explanation: "Fact: It's about 7 seconds before deciding whether to pass or reject."
       },
       {
         id: 3,
-        text: "True or False: AI is currently allowed to make hiring decisions without human review.",
-        options: ["True", "False"],
-        correctAnswer: 1,
-        explanation: "Most jurisdictions require human oversight for AI-driven hiring decisions to prevent bias."
+        text: "Fact or Fiction: This fiscal year at Sourcegraph, we've had over 93% of job offers accepted by candidates.",
+        options: ["Fact", "Fiction"],
+        correctAnswer: 0,
+        explanation: "Fact: We've averaged 95% acceptance rate - in comparison to the industry average of 75-85%!"
       },
       {
         id: 4,
-        text: "What percentage of job seekers lie on their resumes?",
-        options: ["15%", "35%", "58%", "75%"],
-        correctAnswer: 2,
-        explanation: "Studies suggest approximately 58% of hiring managers have caught lies on resumes."
+        text: "Fact or Fiction: On average, at Sourcegraph, it takes candidates 5 days to accept an offer.",
+        options: ["Fact", "Fiction"],
+        correctAnswer: 1,
+        explanation: "Fiction: It takes candidates on average 3.6 days to accept an offer."
       }
     ]
   },
