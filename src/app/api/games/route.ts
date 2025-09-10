@@ -5,11 +5,11 @@ import { generateGameCode } from '@/lib/gameUtils';
 // Create a new game
 export async function POST(request: NextRequest) {
   try {
-    const { hostName, teams } = await request.json();
+    const { hostName, maxTeams } = await request.json();
 
-    if (!hostName || !teams || teams.length < 2) {
+    if (!hostName) {
       return NextResponse.json(
-        { error: 'Host name and at least 2 teams are required' },
+        { error: 'Host name is required' },
         { status: 400 }
       );
     }
@@ -28,24 +28,19 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Create game with teams
+    // Create game without teams (teams will be created when players join)
     const game = await prisma.game.create({
       data: {
         code: gameCode,
         hostName,
-        teams: {
-          create: teams.map((team: { name: string }, index: number) => ({
-            name: team.name,
-            color: `hsl(${(index * 60) % 360}, 70%, 50%)`
-          }))
-        }
+        // Store maxTeams for validation but don't create teams yet
       },
       include: {
         teams: true
       }
     });
 
-    return NextResponse.json({ game });
+    return NextResponse.json({ game, maxTeams });
   } catch (error) {
     console.error('Error creating game:', error);
     return NextResponse.json(

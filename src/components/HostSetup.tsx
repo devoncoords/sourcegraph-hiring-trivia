@@ -8,40 +8,12 @@ interface HostSetupProps {
 
 export default function HostSetup({ onGameCreated }: HostSetupProps) {
   const [hostName, setHostName] = useState('');
-  const [teamNames, setTeamNames] = useState<string[]>(['', '', '']);
-  const [numTeams, setNumTeams] = useState(3);
+  const [maxTeams, setMaxTeams] = useState(6);
   const [isCreating, setIsCreating] = useState(false);
 
-  const updateTeamName = (index: number, name: string) => {
-    const newNames = [...teamNames];
-    newNames[index] = name;
-    setTeamNames(newNames);
-  };
-
-  const addTeam = () => {
-    if (numTeams < 6) {
-      setNumTeams(numTeams + 1);
-      setTeamNames([...teamNames, '']);
-    }
-  };
-
-  const removeTeam = () => {
-    if (numTeams > 2) {
-      setNumTeams(numTeams - 1);
-      setTeamNames(teamNames.slice(0, -1));
-    }
-  };
-
   const createGame = async () => {
-    const validTeamNames = teamNames.slice(0, numTeams).filter(name => name.trim() !== '');
-    
     if (!hostName.trim()) {
       alert('Please enter your name as the host!');
-      return;
-    }
-
-    if (validTeamNames.length < 2) {
-      alert('Please enter at least 2 team names to create the game!');
       return;
     }
 
@@ -55,7 +27,7 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
         },
         body: JSON.stringify({
           hostName: hostName.trim(),
-          teams: validTeamNames.map(name => ({ name: name.trim() }))
+          maxTeams: maxTeams
         })
       });
 
@@ -104,41 +76,35 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
             />
           </div>
 
-          <h2 className="text-2xl font-semibold mb-6 text-center">Setup Team Names</h2>
-          
-          <div className="space-y-4 mb-6">
-            {Array.from({ length: numTeams }, (_, index) => (
-              <div key={index} className="flex items-center space-x-3">
-                <span className="text-vermilion-500 font-semibold w-16">
-                  Team {index + 1}:
-                </span>
-                <input
-                  type="text"
-                  placeholder="Enter team name"
-                  value={teamNames[index] || ''}
-                  onChange={(e) => updateTeamName(index, e.target.value)}
-                  className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-vermilion-500 focus:ring-1 focus:ring-vermilion-500"
-                  maxLength={30}
-                />
-              </div>
-            ))}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Maximum Number of Teams
+            </label>
+            <select
+              value={maxTeams}
+              onChange={(e) => setMaxTeams(parseInt(e.target.value))}
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-vermilion-500 focus:ring-1 focus:ring-vermilion-500"
+            >
+              <option value={3}>3 teams</option>
+              <option value={4}>4 teams</option>
+              <option value={5}>5 teams</option>
+              <option value={6}>6 teams</option>
+              <option value={8}>8 teams</option>
+              <option value={10}>10 teams</option>
+            </select>
+            <p className="text-xs text-gray-400 mt-1">
+              Teams will create their own names when they join
+            </p>
           </div>
 
-          <div className="flex justify-center space-x-4 mb-6">
-            <button
-              onClick={removeTeam}
-              disabled={numTeams <= 2}
-              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              - Remove Team
-            </button>
-            <button
-              onClick={addTeam}
-              disabled={numTeams >= 6}
-              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              + Add Team
-            </button>
+          <div className="bg-blue-900 rounded-lg p-4 mb-6 border border-blue-700">
+            <h3 className="text-blue-200 font-semibold mb-2">📱 How It Works:</h3>
+            <div className="text-blue-100 text-sm space-y-1">
+              <p>1. You create the game and get a join code</p>
+              <p>2. Teams join using the code and choose their team name</p>
+              <p>3. Start the game when enough teams have joined</p>
+              <p>4. Teams play from their own devices</p>
+            </div>
           </div>
 
           <div className="text-center">

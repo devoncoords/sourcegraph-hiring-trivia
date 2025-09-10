@@ -97,10 +97,10 @@ export default function GameLobby({ game, gameCode, isHost, onStartGame, onLeave
           {isHost && (
             <button
               onClick={onStartGame}
-              disabled={!game.teams || game.teams.length < 1}
+              disabled={!game.teams || game.teams.length < 2}
               className="px-8 py-3 bg-vermilion-500 text-white font-semibold rounded-lg hover:bg-vermilion-600 transition-colors text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {game.teams && game.teams.length >= 1 ? 'Start Game 🚀' : 'Waiting for Teams...'}
+              {game.teams && game.teams.length >= 2 ? `Start Game with ${game.teams.length} Teams 🚀` : `Waiting for Teams... (${game.teams?.length || 0}/2 minimum)`}
             </button>
           )}
           

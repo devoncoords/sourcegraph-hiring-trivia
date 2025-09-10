@@ -75,7 +75,7 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 7,
-        text: "Which one of these is *not* an overall hiring recommendation?",
+        text: "Which one of these is *not* an overall hiring recommendation in Greenhouse?",
         options: [
           "Strong Yes",
           "Yes",
