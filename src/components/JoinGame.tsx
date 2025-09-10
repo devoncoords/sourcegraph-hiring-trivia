@@ -15,6 +15,7 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
   const [isJoining, setIsJoining] = useState(false);
   const [isCreatingTeam, setIsCreatingTeam] = useState(false);
   const [step, setStep] = useState<'enter-code' | 'create-team'>('enter-code');
+  const [teamNameTimer, setTeamNameTimer] = useState(30);
 
   const findGame = useCallback(async () => {
     if (!gameCode.trim()) {
@@ -43,6 +44,7 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
 
       setGameData(data.game);
       setStep('create-team');
+      setTeamNameTimer(30); // Start 30 second timer
     } catch (error) {
       console.error('Error finding game:', error);
       alert('Game not found. Please check the code and try again.');
@@ -93,6 +95,72 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
     }
   }, [initialGameCode, findGame]);
 
+  const handleTimeUp = useCallback(async () => {
+    if (isCreatingTeam) return;
+
+    // Auto-generate team name based on existing teams
+    const defaultName = `Team ${(gameData?.teams?.length || 0) + 1}`;
+    setTeamName(defaultName);
+    
+    // Auto-submit with default name
+    try {
+      const response = await fetch('/api/teams', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gameId: gameData.id,
+          teamName: defaultName
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        onGameJoined(data.game.id, data.game.code, false);
+      } else {
+        // If default name fails, try with timestamp
+        const timestampName = `Team ${Date.now().toString().slice(-4)}`;
+        const retryResponse = await fetch('/api/teams', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            gameId: gameData.id,
+            teamName: timestampName
+          })
+        });
+
+        if (retryResponse.ok) {
+          const retryData = await retryResponse.json();
+          onGameJoined(retryData.game.id, retryData.game.code, false);
+        } else {
+          alert('Time expired. Please try joining again.');
+          setStep('enter-code');
+        }
+      }
+    } catch {
+      alert('Time expired. Please try joining again.');
+      setStep('enter-code');
+    }
+  }, [isCreatingTeam, gameData, onGameJoined]);
+
+  // Team name timer countdown
+  useEffect(() => {
+    if (step !== 'create-team' || teamNameTimer <= 0) return;
+
+    const timer = setInterval(() => {
+      setTeamNameTimer((prev) => {
+        if (prev <= 1) {
+          // Time's up - create team with default name or kick back
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [step, teamNameTimer, handleTimeUp]);
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       if (step === 'enter-code') {
@@ -114,8 +182,11 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
             <p className="text-xl text-gray-300 mb-2">
               Game: <span className="font-mono text-vermilion-500">{gameData.code}</span>
             </p>
+            <div className={`text-3xl font-bold mb-2 ${teamNameTimer <= 10 ? 'text-red-500' : 'text-vermilion-500'}`}>
+              ⏱️ {teamNameTimer}s
+            </div>
             <p className="text-gray-400">
-              Choose a unique team name
+              Choose a unique team name quickly!
             </p>
           </div>
 
@@ -130,12 +201,27 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-vermilion-500 focus:ring-1 focus:ring-vermilion-500 text-center text-lg"
+                disabled={teamNameTimer === 0}
+                className={`w-full px-4 py-3 border rounded-lg text-center text-lg transition-colors ${
+                  teamNameTimer === 0
+                    ? 'bg-gray-700 border-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-vermilion-500 focus:ring-1 focus:ring-vermilion-500'
+                }`}
                 maxLength={30}
               />
               <p className="text-xs text-gray-400 mt-1">
                 This will be your team&apos;s display name during the game
               </p>
+              {teamNameTimer <= 10 && teamNameTimer > 0 && (
+                <div className="mt-2 p-2 bg-red-900 border border-red-500 rounded text-red-200 text-sm text-center">
+                  ⚠️ Hurry up! {teamNameTimer} seconds left
+                </div>
+              )}
+              {teamNameTimer === 0 && (
+                <div className="mt-2 p-2 bg-gray-800 border border-gray-600 rounded text-gray-300 text-sm text-center">
+                  ⏱️ Time expired! Auto-assigning team name...
+                </div>
+              )}
             </div>
 
             {gameData.teams && gameData.teams.length > 0 && (
@@ -158,15 +244,21 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
             <div className="space-y-3">
               <button
                 onClick={createTeam}
-                disabled={isCreatingTeam || !teamName.trim()}
+                disabled={isCreatingTeam || !teamName.trim() || teamNameTimer === 0}
                 className="w-full px-6 py-3 bg-vermilion-500 text-white font-semibold rounded-lg hover:bg-vermilion-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isCreatingTeam ? 'Creating Team...' : 'Join Game as ' + (teamName.trim() || '[Team Name]') + ' →'}
+                {isCreatingTeam ? 'Creating Team...' : 
+                 teamNameTimer === 0 ? 'Time Expired' :
+                 'Join Game as ' + (teamName.trim() || '[Team Name]') + ' →'}
               </button>
 
               <button
-                onClick={() => setStep('enter-code')}
-                className="w-full px-6 py-3 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
+                onClick={() => {
+                  setStep('enter-code');
+                  setTeamNameTimer(30);
+                }}
+                disabled={teamNameTimer === 0}
+                className="w-full px-6 py-3 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 ← Change Game Code
               </button>

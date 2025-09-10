@@ -4,6 +4,8 @@ export interface Question {
   options: string[];
   correctAnswer: number;
   explanation?: string;
+  type?: 'multiple-choice' | 'open-ended';
+  correctValue?: number; // For open-ended questions with numeric answers
 }
 
 export interface Round {
@@ -19,7 +21,7 @@ export interface Team {
   id: string;
   name: string;
   score: number;
-  answers: { [roundId: number]: { [questionId: number]: number } };
+  answers: { [roundId: number]: { [questionId: number]: number | string } };
 }
 
 export interface GameState {

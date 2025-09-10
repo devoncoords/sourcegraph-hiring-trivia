@@ -91,6 +91,32 @@ export default function PlayerView({
     }
   };
 
+  const submitOpenEndedAnswer = async (textAnswer: string) => {
+    if (!selectedTeamId || hasSubmitted || timeLeft === 0) return;
+
+    try {
+      const response = await fetch(`/api/games/${gameId}/answers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamId: selectedTeamId,
+          roundId: game.currentRound,
+          questionId: game.currentQuestion,
+          textAnswer: textAnswer.trim()
+        })
+      });
+
+      if (response.ok) {
+        setHasSubmitted(true);
+      } else {
+        const error = await response.json();
+        console.error('Failed to submit answer:', error);
+      }
+    } catch (error) {
+      console.error('Error submitting answer:', error);
+    }
+  };
+
   // Between rounds - show current scores
   if (game.gamePhase === 'BETWEEN_ROUNDS') {
     const sortedTeams = [...game.teams].sort((a, b) => b.score - a.score);
