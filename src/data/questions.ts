@@ -41,8 +41,8 @@ export const triviaRounds: Round[] = [
   },
   {
     id: 2,
-    title: "Interview Scenarios - UPDATED",
-    theme: "What's the best practice in tricky interview moments",
+    title: "Interviewing at Sourcegraph",
+    theme: "Inside knowledge about Sourcegraph's hiring process + best practices",
     emoji: "🕹️",
     pointsPerQuestion: 10,
     questions: [
