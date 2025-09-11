@@ -33,7 +33,7 @@ export async function POST(
     }
 
     // Verify team belongs to this game
-    const team = game.teams.find(t => t.id === teamId);
+    const team = game.teams.find((t: any) => t.id === teamId);
     if (!team) {
       return NextResponse.json(
         { error: 'Team not found in this game' },

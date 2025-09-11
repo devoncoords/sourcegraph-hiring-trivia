@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if team name already exists in this game
-    const existingTeam = game.teams.find(team => 
+    const existingTeam = game.teams.find((team: any) => 
       team.name.toLowerCase().trim() === teamName.toLowerCase().trim()
     );
 
