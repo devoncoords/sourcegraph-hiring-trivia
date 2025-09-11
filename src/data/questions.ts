@@ -40,7 +40,7 @@ export const triviaRounds: Round[] = [
   },
   {
     id: 2,
-    title: "Interview Scenarios",
+    title: "Interview Scenarios - UPDATED",
     theme: "What's the best practice in tricky interview moments",
     emoji: "🕹️",
     pointsPerQuestion: 10,
