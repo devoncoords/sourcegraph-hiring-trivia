@@ -56,7 +56,7 @@ export default function QuestionPreview() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-vermilion-500 font-display mb-2">
-            📝 Question Preview Tool v3 - FORCE UPDATE
+            📝 Question Preview Tool - Ready!
           </h1>
           <p className="text-gray-400">
             Preview and test all trivia questions without starting a game
