@@ -56,7 +56,7 @@ export const triviaRounds: Round[] = [
           "32%"
         ],
         correctAnswer: 2,
-        explanation: "23% of our hires came from referrals. 📖 View in Sourcegraph Handbook: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
+        explanation: "23% of our hires came from referrals. See handbook: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
       },
       {
         id: 6,
