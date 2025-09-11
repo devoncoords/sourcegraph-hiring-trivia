@@ -16,7 +16,7 @@ export default function MainMenu({ onHostGame, onJoinGame }: MainMenuProps) {
             🎯 Sourcegraph Hiring Trivia
           </h1>
           <p className="text-xl text-gray-300 mb-4 font-body">
-            Test your hiring knowledge across 5 exciting rounds!
+            Test your hiring knowledge across 4 exciting rounds!
           </p>
           <p className="text-lg text-vermilion-400 font-ui">
             Multiplayer • Real-time • Mobile-friendly

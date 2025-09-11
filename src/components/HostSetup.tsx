@@ -119,7 +119,7 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
         </div>
 
         <div className="mt-8 text-center text-sm text-gray-400">
-          <p>5 rounds • Multiple choice questions • Real-time multiplayer</p>
+          <p>4 rounds • Multiple choice questions • Real-time multiplayer</p>
         </div>
       </div>
     </div>

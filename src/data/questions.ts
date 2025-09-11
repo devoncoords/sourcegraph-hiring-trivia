@@ -76,7 +76,7 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 7,
-        text: "This interview is meant to assess if you will be a value-add to the team, take and give constructive criticism, and be an overall supportive team member",
+        text: "This interview is meant to assess if you will be a value-add to the team, take and give constructive criticism, and be an overall supportive team member.",
         options: [
           "Recruiter Screen",
           "Hiring Manager Screen",
@@ -149,43 +149,6 @@ export const triviaRounds: Round[] = [
   },
   {
     id: 4,
-    title: "Sourcegraph-Specific Round",
-    theme: "Inside knowledge about Sourcegraph's hiring process",
-    emoji: "🕹️",
-    pointsPerQuestion: 20, // Double points!
-    questions: [
-      {
-        id: 18,
-        text: "What's the most common source of hires at Sourcegraph?",
-        options: ["Referrals", "Inbound applications", "LinkedIn outreach", "Events"],
-        correctAnswer: 0,
-        explanation: "Employee referrals are typically the highest quality and most common source of hires."
-      },
-      {
-        id: 19,
-        text: "What's the average number of interviews in our process?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: 1,
-        explanation: "Most roles at Sourcegraph involve 4 interview stages including screening and final rounds."
-      },
-      {
-        id: 20,
-        text: "Which role did we hire for most last year?",
-        options: ["Software Engineer", "Sales Development Rep", "Customer Engineer", "Product Manager"],
-        correctAnswer: 0,
-        explanation: "Engineering roles typically make up the largest portion of hires at a tech company like Sourcegraph."
-      },
-      {
-        id: 21,
-        text: "Which teammate asks the longest interview questions? 😄",
-        options: ["Quinn", "Beyang", "Alex", "The hiring manager"],
-        correctAnswer: 2,
-        explanation: "This is just a fun inside joke question - everyone's interview style is different!"
-      }
-    ]
-  },
-  {
-    id: 5,
     title: "Final Round: Price is Right!",
     theme: "Closest answer wins",
     emoji: "⚡",

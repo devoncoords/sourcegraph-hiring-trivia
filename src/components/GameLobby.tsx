@@ -81,7 +81,7 @@ export default function GameLobby({ game, gameCode, isHost, onStartGame, onLeave
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
             <div>
-              <p className="mb-2">• <strong>5 rounds</strong> of hiring trivia</p>
+              <p className="mb-2">• <strong>4 rounds</strong> of hiring trivia</p>
               <p className="mb-2">• <strong>30-second timers</strong> per question</p>
               <p className="mb-2">• <strong>Real-time scoring</strong> and leaderboards</p>
             </div>

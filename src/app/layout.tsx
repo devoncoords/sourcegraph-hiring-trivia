@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Sourcegraph Hiring Trivia",
-  description: "Test your hiring knowledge across 5 rounds of Sourcegraph-themed trivia questions",
+  description: "Test your hiring knowledge across 4 rounds of Sourcegraph-themed trivia questions",
 };
 
 export default function RootLayout({
