@@ -75,15 +75,17 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 7,
-        text: "Which one of these is *not* an overall hiring recommendation in Greenhouse?",
+        text: "This interview is meant to assess if you will be a value-add to the team, take and give constructive criticism, and be an overall supportive team member",
         options: [
-          "Strong Yes",
-          "Yes",
-          "No",
-          "Strong No"
+          "Recruiter Screen",
+          "Hiring Manager Screen",
+          "Resume Deep Dive",
+          "Peer Interview",
+          "Cross-functional Team Collaboration Interview",
+          "Values Interview"
         ],
         correctAnswer: 3,
-        explanation: "Standard hiring recommendations in Greenhouse, our ATS, are Strong Yes, Yes, No, and Definitely Not. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#4a837097be8841e2b5c76d27c4d29149"
+        explanation: "The Peer Interview is designed to assess team fit, ability to give and receive constructive feedback, and collaborative team dynamics. See handbook: https://www.notion.so/sourcegraph/Types-of-interviews-sample-questions-f279f080583d49ee9f2c60e30c8cb1f7?source=copy_link#cb00697e95304550a146c32563c0255d"
       },
       {
         id: 8,
