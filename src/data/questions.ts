@@ -133,7 +133,7 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 12,
-        text: "Which non-recruiting teammate spent the most time interviewing over the past two fiscal years?",
+        text: "Which non-recruiting teammate spent the most time interviewing over the past fiscal year?",
         options: [
           "Quinn Slack",
           "Aimee Menne",
@@ -142,8 +142,8 @@ export const triviaRounds: Round[] = [
           "Jon Kishpaugh",
           "Enrique Gonzales"
         ],
-        correctAnswer: 4,
-        explanation: "Jon Kishpaugh has dedicated the most interview time among non-recruiting teammates over the past two fiscal years."
+        correctAnswer: 1,
+        explanation: "Aimee Menne has dedicated the most interview time among non-recruiting teammates over the past fiscal year."
       }
     ]
   },
