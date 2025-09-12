@@ -48,18 +48,6 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 5,
-        text: "What % of our hires came from referrals?",
-        options: [
-          "5%",
-          "11%",
-          "23%",
-          "32%"
-        ],
-        correctAnswer: 2,
-        explanation: "23% of our hires came from referrals. See handbook: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
-      },
-      {
-        id: 6,
         text: "Which of these is an illegal interview question?",
         options: [
           "What year did you graduate?",
@@ -73,6 +61,18 @@ export const triviaRounds: Round[] = [
         ],
         correctAnswer: 7,
         explanation: "All of these questions are illegal as they can lead to discrimination based on age, national origin, marital status, family status, or other protected characteristics. See handbook: https://www.notion.so/sourcegraph/Interview-Training-fef9408527084f258cfbf4fd651e95ac?source=copy_link#b4899eb58e2a45a0887411df78cf62b8"
+      },
+      {
+        id: 6,
+        text: "What % of our hires came from referrals?",
+        options: [
+          "5%",
+          "11%",
+          "23%",
+          "32%"
+        ],
+        correctAnswer: 2,
+        explanation: "23% of our hires came from referrals. See handbook: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
       },
       {
         id: 7,

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { formatQuestionText } from '@/utils/formatText';
+import { gameSounds, enableAudio } from '@/utils/sounds';
 
 interface HostControlsProps {
   game: any;
@@ -20,6 +21,7 @@ export default function HostControls({
 }: HostControlsProps) {
   const [timeLeft, setTimeLeft] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   // Calculate time left from timerEndsAt
   useEffect(() => {
@@ -33,6 +35,18 @@ export default function HostControls({
 
       if (remaining === 0 && !showResults) {
         setShowResults(true);
+        if (soundEnabled) {
+          gameSounds.playTimeUp();
+        }
+      }
+
+      // Play countdown sounds
+      if (soundEnabled && remaining > 0 && remaining <= 10) {
+        if (currentRound?.id === 4) {
+          gameSounds.playFinalRoundCountdown(remaining);
+        } else {
+          gameSounds.playCountdownWarning(remaining);
+        }
       }
     };
 
@@ -41,8 +55,22 @@ export default function HostControls({
     return () => clearInterval(interval);
   }, [game.timerEndsAt, showResults]);
 
+  const enableSounds = async () => {
+    await enableAudio();
+    setSoundEnabled(true);
+  };
+
   const startTimer = async () => {
-    const timerDuration = currentRound?.id === 5 ? 60 : 30; // Final round gets 60 seconds
+    const timerDuration = currentRound?.id === 4 ? 60 : 30; // Final round gets 60 seconds
+    
+    // Enable audio and play round start sound
+    if (!soundEnabled) {
+      await enableSounds();
+    }
+    if (soundEnabled) {
+      gameSounds.playRoundStart();
+    }
+
     await fetch(`/api/games/${gameId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -185,11 +213,21 @@ export default function HostControls({
               <p>Question {game.currentQuestion + 1} of {currentRound?.questions.length}</p>
             </div>
             <div className="text-right">
+              <div className="flex items-center justify-end space-x-3 mb-2">
+                <button
+                  onClick={soundEnabled ? () => setSoundEnabled(false) : enableSounds}
+                  className="text-sm px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-colors"
+                  title={soundEnabled ? 'Disable countdown sounds' : 'Enable countdown sounds'}
+                >
+                  {soundEnabled ? '🔊 Sounds On' : '🔇 Enable Sounds'}
+                </button>
+              </div>
               <div className={`text-3xl font-bold ${timeLeft <= 5 && timeLeft > 0 ? 'text-red-200' : ''}`}>
                 {timeLeft > 0 ? `${timeLeft}s` : game.timerEndsAt ? 'Time\'s Up!' : 'Ready'}
               </div>
               <div className="text-sm opacity-90">
                 {currentRound?.pointsPerQuestion} points
+                {currentRound?.id === 4 && ' • Final Round!'}
               </div>
             </div>
           </div>

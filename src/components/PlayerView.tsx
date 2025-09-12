@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { formatQuestionText } from '@/utils/formatText';
+import { gameSounds, enableAudio } from '@/utils/sounds';
 
 interface PlayerViewProps {
   game: any;
@@ -23,6 +24,8 @@ export default function PlayerView({
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [lastSoundTime, setLastSoundTime] = useState<number | null>(null);
 
   const selectedTeam = game.teams?.find((t: any) => t.id === selectedTeamId);
 
@@ -41,6 +44,26 @@ export default function PlayerView({
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [game.timerEndsAt]);
+
+  // Play countdown sounds
+  useEffect(() => {
+    if (!soundEnabled || !timeLeft || timeLeft === lastSoundTime) return;
+
+    // Play countdown sounds for final round
+    if (currentRound?.id === 4) {
+      gameSounds.playFinalRoundCountdown(timeLeft);
+    } else {
+      // Regular countdown sounds
+      gameSounds.playCountdownWarning(timeLeft);
+    }
+
+    setLastSoundTime(timeLeft);
+
+    // Play time's up sound
+    if (timeLeft === 0) {
+      setTimeout(() => gameSounds.playTimeUp(), 500);
+    }
+  }, [timeLeft, soundEnabled, lastSoundTime, currentRound]);
 
   // Check if team has already answered this question
   useEffect(() => {
@@ -61,8 +84,18 @@ export default function PlayerView({
     }
   }, [game.answers, selectedTeamId, game.currentRound, game.currentQuestion]);
 
+  const enableSounds = async () => {
+    await enableAudio();
+    setSoundEnabled(true);
+  };
+
   const submitAnswer = async (answerIndex: number) => {
     if (!selectedTeamId || hasSubmitted || timeLeft === 0) return;
+
+    // Enable audio on first interaction
+    if (!soundEnabled) {
+      await enableSounds();
+    }
 
     setSelectedAnswer(answerIndex);
 
@@ -80,9 +113,15 @@ export default function PlayerView({
 
       if (response.ok) {
         setHasSubmitted(true);
+        if (soundEnabled) {
+          gameSounds.playCorrectAnswer();
+        }
       } else {
         const error = await response.json();
         console.error('Failed to submit answer:', error);
+        if (soundEnabled) {
+          gameSounds.playWrongAnswer();
+        }
         setSelectedAnswer(null);
       }
     } catch (error) {
@@ -234,7 +273,16 @@ export default function PlayerView({
                 ></div>
                 <span className="font-semibold">{selectedTeam.name}</span>
               </div>
-              <span className="text-vermilion-500 font-bold">{selectedTeam.score} pts</span>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={soundEnabled ? () => setSoundEnabled(false) : enableSounds}
+                  className="text-xs px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded transition-colors"
+                  title={soundEnabled ? 'Disable sounds' : 'Enable sounds'}
+                >
+                  {soundEnabled ? '🔊' : '🔇'}
+                </button>
+                <span className="text-vermilion-500 font-bold">{selectedTeam.score} pts</span>
+              </div>
             </div>
           )}
         </div>
