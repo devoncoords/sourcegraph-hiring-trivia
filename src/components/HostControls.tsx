@@ -95,7 +95,7 @@ export default function HostControls({
 
   const nextQuestion = async () => {
     const isLastQuestion = game.currentQuestion + 1 >= currentRound.questions.length;
-    const isLastRound = game.currentRound + 1 >= 5; // 5 rounds total
+    const isLastRound = game.currentRound + 1 >= 4; // 4 rounds total
 
     if (isLastQuestion && isLastRound) {
       // Game finished
@@ -338,7 +338,7 @@ export default function HostControls({
               >
                 {game.currentQuestion + 1 < currentRound.questions.length
                   ? 'Next Question →'
-                  : game.currentRound + 1 < 5
+                  : game.currentRound + 1 < 4
                   ? 'Next Round →'
                   : 'Finish Game 🏆'}
               </button>
