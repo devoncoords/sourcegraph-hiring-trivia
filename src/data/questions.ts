@@ -60,7 +60,7 @@ export const triviaRounds: Round[] = [
           "All of the above"
         ],
         correctAnswer: 7,
-        explanation: "All of these questions are illegal as they can lead to discrimination based on age, national origin, marital status, family status, or other protected characteristics. See handbook: https://www.notion.so/sourcegraph/Interview-Training-fef9408527084f258cfbf4fd651e95ac?source=copy_link#b4899eb58e2a45a0887411df78cf62b8"
+        explanation: "All of these questions are illegal as they can lead to discrimination based on age, national origin, marital status, family status, or other protected characteristics."
       },
       {
         id: 6,
@@ -72,7 +72,7 @@ export const triviaRounds: Round[] = [
           "32%"
         ],
         correctAnswer: 2,
-        explanation: "23% of our hires came from referrals. See handbook: https://www.notion.so/sourcegraph/Identifying-candidates-3e7fefdc3d4a400ca62ef4c8c68ccea0?source=copy_link#566aa4c08acb48caba68efbd34aab82b"
+        explanation: "23% of our hires came from referrals."
       },
       {
         id: 7,
@@ -86,7 +86,7 @@ export const triviaRounds: Round[] = [
           "Values Interview"
         ],
         correctAnswer: 3,
-        explanation: "The Peer Interview is designed to assess team fit, ability to give and receive constructive feedback, and collaborative team dynamics. See handbook: https://www.notion.so/sourcegraph/Types-of-interviews-sample-questions-f279f080583d49ee9f2c60e30c8cb1f7?source=copy_link#cb00697e95304550a146c32563c0255d"
+        explanation: "The Peer Interview is designed to assess team fit, ability to give and receive constructive feedback, and collaborative team dynamics."
       },
       {
         id: 8,
@@ -99,7 +99,7 @@ export const triviaRounds: Round[] = [
           "Tie the feedback back to the job description"
         ],
         correctAnswer: 0,
-        explanation: "Provide feedback verbally, not in writing. Providing verbal feedback gives the candidate one final personal touch-point with you. It also reduces the likelihood of having your exact words used against you. We never provide individualized feedback in writing. See handbook: https://www.notion.so/sourcegraph/The-Sourcegraph-Interview-Process-9f24966cd2304ca09a33e6b950cfd34e?source=copy_link#d5096a5979774476be4d2945cc3afa7a"
+        explanation: "Provide feedback verbally, not in writing. Providing verbal feedback gives the candidate one final personal touch-point with you. It also reduces the likelihood of having your exact words used against you. We never provide individualized feedback in writing."
       }
     ]
   },
@@ -156,12 +156,12 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 22,
-        text: "How many applications has Sourcegraph received year-to-date? (Enter your best guess - closest wins!)",
+        text: "How many applications has Sourcegraph received since January 1, 2025? (Enter your best guess - closest wins!)",
         options: [], // No options for open-ended
         correctAnswer: -1, // Not used for open-ended
         type: 'open-ended',
         correctValue: 26010,
-        explanation: "The actual number is 26,010 applications year-to-date. In Price is Right style, the closest guess without going over wins!"
+        explanation: "The actual number is 26,010 applications since January 1, 2025. In Price is Right style, the closest guess without going over wins!"
       }
     ]
   }

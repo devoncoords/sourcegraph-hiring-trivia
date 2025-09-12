@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { formatQuestionText } from '@/utils/formatText';
 import { gameSounds, enableAudio } from '@/utils/sounds';
+import OpenEndedInput from '@/components/OpenEndedInput';
 
 interface PlayerViewProps {
   game: any;
@@ -291,43 +292,53 @@ export default function PlayerView({
         <div className="bg-gray-900 rounded-lg p-6 mb-6 border border-gray-800">
           <h2 className="text-xl font-semibold mb-6 text-center">{formatQuestionText(currentQuestion.text)}</h2>
           
-          <div className="space-y-3">
-            {currentQuestion.options.map((option: string, index: number) => (
-              <button
-                key={index}
-                onClick={() => submitAnswer(index)}
-                disabled={hasSubmitted || timeLeft === 0 || !game.timerEndsAt}
-                className={`w-full p-4 rounded-lg border text-left transition-colors ${
-                  selectedAnswer === index
-                    ? game.showResults
-                      ? index === currentQuestion.correctAnswer
+          {currentQuestion.type === 'open-ended' ? (
+            <OpenEndedInput
+              onSubmit={(answer) => submitOpenEndedAnswer(answer)}
+              disabled={timeLeft === 0 || !game.timerEndsAt}
+              hasSubmitted={hasSubmitted}
+              submittedAnswer={selectedAnswer as string}
+              placeholder="Enter your numerical guess"
+            />
+          ) : (
+            <div className="space-y-3">
+              {currentQuestion.options.map((option: string, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => submitAnswer(index)}
+                  disabled={hasSubmitted || timeLeft === 0 || !game.timerEndsAt}
+                  className={`w-full p-4 rounded-lg border text-left transition-colors ${
+                    selectedAnswer === index
+                      ? game.showResults
+                        ? index === currentQuestion.correctAnswer
+                          ? 'bg-green-900 border-green-500 text-green-100'
+                          : 'bg-red-900 border-red-500 text-red-100'
+                        : 'bg-vermilion-500 border-vermilion-400 text-white'
+                      : game.showResults && index === currentQuestion.correctAnswer
                         ? 'bg-green-900 border-green-500 text-green-100'
-                        : 'bg-red-900 border-red-500 text-red-100'
-                      : 'bg-vermilion-500 border-vermilion-400 text-white'
-                    : game.showResults && index === currentQuestion.correctAnswer
-                      ? 'bg-green-900 border-green-500 text-green-100'
-                      : hasSubmitted || timeLeft === 0 || !game.timerEndsAt
-                        ? 'bg-gray-800 border-gray-700 text-gray-400 cursor-not-allowed'
-                        : 'bg-gray-800 border-gray-700 hover:border-vermilion-500 hover:bg-gray-700'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center">
-                    <span className="text-vermilion-500 font-bold mr-4 text-lg">
-                      {String.fromCharCode(65 + index)})
+                        : hasSubmitted || timeLeft === 0 || !game.timerEndsAt
+                          ? 'bg-gray-800 border-gray-700 text-gray-400 cursor-not-allowed'
+                          : 'bg-gray-800 border-gray-700 hover:border-vermilion-500 hover:bg-gray-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center">
+                      <span className="text-vermilion-500 font-bold mr-4 text-lg">
+                        {String.fromCharCode(65 + index)})
+                      </span>
+                      <span className="text-lg">{option}</span>
                     </span>
-                    <span className="text-lg">{option}</span>
-                  </span>
-                  {game.showResults && index === currentQuestion.correctAnswer && (
-                    <span className="text-green-400 text-xl">✓</span>
-                  )}
-                  {selectedAnswer === index && !game.showResults && (
-                    <span className="text-white text-xl">✓</span>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
+                    {game.showResults && index === currentQuestion.correctAnswer && (
+                      <span className="text-green-400 text-xl">✓</span>
+                    )}
+                    {selectedAnswer === index && !game.showResults && (
+                      <span className="text-white text-xl">✓</span>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Status Messages */}
