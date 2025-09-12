@@ -25,7 +25,7 @@ export default function HostControls({
 
   // Calculate time left from timerEndsAt
   useEffect(() => {
-    if (!game.timerEndsAt) return;
+    if (!game.timerEndsAt || showResults || game.showResults) return;
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -53,7 +53,7 @@ export default function HostControls({
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [game.timerEndsAt, showResults]);
+  }, [game.timerEndsAt, showResults, game.showResults, soundEnabled, currentRound]);
 
   const enableSounds = async () => {
     await enableAudio();
@@ -222,8 +222,8 @@ export default function HostControls({
                   {soundEnabled ? '🔊 Sounds On' : '🔇 Enable Sounds'}
                 </button>
               </div>
-              <div className={`text-3xl font-bold ${timeLeft <= 5 && timeLeft > 0 ? 'text-red-200' : ''}`}>
-                {timeLeft > 0 ? `${timeLeft}s` : game.timerEndsAt ? 'Time\'s Up!' : 'Ready'}
+              <div className={`text-3xl font-bold ${timeLeft <= 5 && timeLeft > 0 && !showResults && !game.showResults ? 'text-red-200' : ''}`}>
+                {showResults || game.showResults ? 'Results!' : timeLeft > 0 ? `${timeLeft}s` : game.timerEndsAt ? 'Time\'s Up!' : 'Ready'}
               </div>
               <div className="text-sm opacity-90">
                 {currentRound?.pointsPerQuestion} points

@@ -31,7 +31,7 @@ export default function PlayerView({
 
   // Calculate time left
   useEffect(() => {
-    if (!game.timerEndsAt) return;
+    if (!game.timerEndsAt || game.showResults) return;
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -43,7 +43,7 @@ export default function PlayerView({
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [game.timerEndsAt]);
+  }, [game.timerEndsAt, game.showResults]);
 
   // Play countdown sounds
   useEffect(() => {
@@ -254,9 +254,9 @@ export default function PlayerView({
             </div>
             <div className="text-right">
               <div className={`text-2xl font-bold ${
-                timeLeft <= 5 && timeLeft > 0 ? 'text-red-500' : 'text-vermilion-500'
+                timeLeft <= 5 && timeLeft > 0 && !game.showResults ? 'text-red-500' : 'text-vermilion-500'
               }`}>
-                {timeLeft > 0 ? `${timeLeft}s` : game.timerEndsAt ? "Time&apos;s Up!" : 'Waiting...'}
+                {game.showResults ? "Results!" : timeLeft > 0 ? `${timeLeft}s` : game.timerEndsAt ? "Time&apos;s Up!" : 'Waiting...'}
               </div>
               <div className="text-sm text-gray-400">
                 {currentRound?.pointsPerQuestion} points
