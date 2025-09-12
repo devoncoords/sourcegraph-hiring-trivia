@@ -68,10 +68,10 @@ export const triviaRounds: Round[] = [
         options: [
           "5%",
           "11%",
-          "23%",
-          "32%"
+          "32%",
+          "23%"
         ],
-        correctAnswer: 2,
+        correctAnswer: 3,
         explanation: "23% of our hires came from referrals."
       },
       {
