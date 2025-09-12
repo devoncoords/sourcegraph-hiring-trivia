@@ -22,7 +22,7 @@ export default function PlayerView({
   gameId,
   onLeaveGame
 }: PlayerViewProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | string | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -134,6 +134,13 @@ export default function PlayerView({
   const submitOpenEndedAnswer = async (textAnswer: string) => {
     if (!selectedTeamId || hasSubmitted || timeLeft === 0) return;
 
+    // Enable audio on first interaction
+    if (!soundEnabled) {
+      await enableSounds();
+    }
+
+    setSelectedAnswer(textAnswer);
+
     try {
       const response = await fetch(`/api/games/${gameId}/answers`, {
         method: 'POST',
@@ -148,12 +155,20 @@ export default function PlayerView({
 
       if (response.ok) {
         setHasSubmitted(true);
+        if (soundEnabled) {
+          gameSounds.playCorrectAnswer();
+        }
       } else {
         const error = await response.json();
         console.error('Failed to submit answer:', error);
+        if (soundEnabled) {
+          gameSounds.playWrongAnswer();
+        }
+        setSelectedAnswer(null);
       }
     } catch (error) {
       console.error('Error submitting answer:', error);
+      setSelectedAnswer(null);
     }
   };
 
