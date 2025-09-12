@@ -120,14 +120,16 @@ export default function HostControls({
         })
       });
     } else {
-      // Next question
+      // Next question with automatic timer start
+      const timerDuration = game.currentRound === 3 ? 60 : 30; // Round 4 gets 60 seconds
+      
       await fetch(`/api/games/${gameId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           currentQuestion: game.currentQuestion + 1,
           showResults: false,
-          timerEndsAt: null
+          timerEndsAt: new Date(Date.now() + timerDuration * 1000).toISOString()
         })
       });
     }
@@ -135,13 +137,21 @@ export default function HostControls({
   };
 
   const startNextRound = async () => {
+    const timerDuration = game.currentRound + 1 === 3 ? 60 : 30; // Round 4 (index 3) gets 60 seconds
+    
     await fetch(`/api/games/${gameId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        gamePhase: 'PLAYING'
+        gamePhase: 'PLAYING',
+        timerEndsAt: new Date(Date.now() + timerDuration * 1000).toISOString()
       })
     });
+    
+    // Play round start sound
+    if (soundEnabled) {
+      gameSounds.playRoundStart();
+    }
   };
 
   // Between rounds view

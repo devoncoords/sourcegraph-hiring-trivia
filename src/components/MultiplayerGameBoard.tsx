@@ -66,15 +66,15 @@ export default function MultiplayerGameBoard({
         isHost={isHost}
         onStartGame={() => {
           if (isHost) {
-            // Start the first round without automatic timer
+            // Start the first round with automatic timer when question is revealed
             fetch(`/api/games/${gameId}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 gamePhase: 'PLAYING',
                 currentRound: 0,
-                currentQuestion: 0
-                // No timerEndsAt - host must manually start timer
+                currentQuestion: 0,
+                timerEndsAt: new Date(Date.now() + 30000).toISOString()
               })
             });
           }
