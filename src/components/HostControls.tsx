@@ -185,6 +185,32 @@ export default function HostControls({
     }
   };
 
+  const scoreFinalRound = async () => {
+    try {
+      const response = await fetch(`/api/games/${gameId}/score-final`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Show success message or update UI
+        if (data.winners && data.winners.length > 0) {
+          const winnerNames = data.winners.map((w: any) => w.teamName).join(', ');
+          alert(`🏆 Final Round Winner(s): ${winnerNames}!\nClosest to ${data.correctAnswer.toLocaleString()} without going over!`);
+        } else {
+          alert(`🚫 No winners - all teams went over ${data.correctAnswer.toLocaleString()}!`);
+        }
+      } else {
+        alert('Failed to score final round: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error scoring final round:', error);
+      alert('Failed to score final round');
+    }
+  };
+
   // Between rounds view
   if (game.gamePhase === 'BETWEEN_ROUNDS') {
     const sortedTeams = [...game.teams].sort((a, b) => b.score - a.score);
@@ -336,9 +362,13 @@ export default function HostControls({
                               : 'bg-red-900 text-red-200'
                             : 'bg-blue-900 text-blue-200'
                         }`}>
-                          {showResults || game.showResults
-                            ? teamAnswer.isCorrect ? '✓ Correct' : '✗ Wrong'
-                            : 'Answered'}
+                          {currentQuestion.type === 'open-ended' && (showResults || game.showResults)
+                            ? `Guess: ${teamAnswer.textAnswer}`
+                            : (showResults || game.showResults)
+                              ? teamAnswer.isCorrect ? '✓ Correct' : '✗ Wrong'
+                              : currentQuestion.type === 'open-ended'
+                                ? `Guess: ${teamAnswer.textAnswer}`
+                                : 'Answered'}
                         </span>
                       ) : (
                         <span className="text-gray-400 text-sm">Waiting...</span>
@@ -373,16 +403,26 @@ export default function HostControls({
             )}
 
             {(timeLeft === 0 || showResults || game.showResults) && (
-              <button
-                onClick={nextQuestion}
-                className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
-              >
-                {game.currentQuestion + 1 < currentRound.questions.length
-                  ? 'Next Question →'
-                  : game.currentRound + 1 < 4
-                  ? 'Next Round →'
-                  : 'Finish Game 🏆'}
-              </button>
+              <div className="space-x-3">
+                {currentRound?.id === 4 && game.showResults && (
+                  <button
+                    onClick={scoreFinalRound}
+                    className="px-6 py-3 bg-yellow-600 text-white font-semibold rounded-lg hover:bg-yellow-700 transition-colors"
+                  >
+                    🏆 Score Price is Right!
+                  </button>
+                )}
+                <button
+                  onClick={nextQuestion}
+                  className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  {game.currentQuestion + 1 < currentRound.questions.length
+                    ? 'Next Question →'
+                    : game.currentRound + 1 < 4
+                    ? 'Next Round →'
+                    : 'Finish Game 🏆'}
+                </button>
+              </div>
             )}
           </div>
 
