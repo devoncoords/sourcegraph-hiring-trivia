@@ -47,7 +47,8 @@ model Answer {
   teamId      String
   roundId     Int
   questionId  Int
-  answerIndex Int
+  answerIndex Int?
+  textAnswer  String?
   isCorrect   Boolean
   pointsAwarded Int   @default(0)
   submittedAt DateTime @default(now())

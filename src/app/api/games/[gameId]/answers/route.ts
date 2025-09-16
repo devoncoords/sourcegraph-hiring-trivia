@@ -10,9 +10,9 @@ export async function POST(
 ) {
   try {
     const { gameId } = await params;
-    const { teamId, roundId, questionId, answerIndex } = await request.json();
+    const { teamId, roundId, questionId, answerIndex, textAnswer } = await request.json();
 
-    if (!teamId || roundId === undefined || questionId === undefined || answerIndex === undefined) {
+    if (!teamId || roundId === undefined || questionId === undefined || (answerIndex === undefined && textAnswer === undefined)) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -52,7 +52,20 @@ export async function POST(
       );
     }
 
-    const isCorrect = answerIndex === question.correctAnswer;
+    // Handle open-ended vs multiple choice scoring
+    let isCorrect = false;
+    let finalAnswerIndex = answerIndex;
+
+    if (question.type === 'open-ended' && textAnswer !== undefined) {
+      // For open-ended questions, store the text answer and mark as correct for participation
+      // Actual scoring will be done manually by comparing guesses to correctValue
+      isCorrect = true; // Give points for participation in open-ended questions
+      finalAnswerIndex = -1; // Use -1 to indicate text answer
+    } else if (answerIndex !== undefined) {
+      // Regular multiple choice scoring
+      isCorrect = answerIndex === question.correctAnswer;
+    }
+
     const pointsAwarded = calculateScore(isCorrect, round.pointsPerQuestion);
 
     // Check if answer already exists (prevent duplicate submissions)
@@ -81,7 +94,8 @@ export async function POST(
         teamId,
         roundId,
         questionId,
-        answerIndex,
+        answerIndex: finalAnswerIndex,
+        textAnswer: textAnswer || null,
         isCorrect,
         pointsAwarded
       }
