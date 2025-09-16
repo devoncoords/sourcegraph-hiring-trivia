@@ -79,6 +79,8 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
         throw new Error(data.error || 'Failed to create team');
       }
 
+      // Store the team ID for automatic assignment
+      localStorage.setItem('selectedTeamId', data.team.id);
       onGameJoined(data.game.id, data.game.code, false);
     } catch (error) {
       console.error('Error creating team:', error);
@@ -123,6 +125,8 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
       const data = await response.json();
 
       if (response.ok) {
+        // Store the team ID for automatic assignment
+        localStorage.setItem('selectedTeamId', data.team.id);
         onGameJoined(data.game.id, data.game.code, false);
       } else {
         // If default name fails, try with timestamp
@@ -138,6 +142,7 @@ export default function JoinGame({ onGameJoined, onBackToMain, initialGameCode }
 
         if (retryResponse.ok) {
           const retryData = await retryResponse.json();
+          localStorage.setItem('selectedTeamId', retryData.team.id);
           onGameJoined(retryData.game.id, retryData.game.code, false);
         } else {
           alert('Time expired. Please try joining again.');

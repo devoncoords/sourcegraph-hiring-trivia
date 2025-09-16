@@ -25,11 +25,23 @@ export default function MultiplayerGameBoard({
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
   const [hasSelectedTeam, setHasSelectedTeam] = useState(false);
 
-  // Auto-select team for single-player testing or if only one team
+  // Auto-select team from localStorage or single team
   useEffect(() => {
-    if (gameData?.teams && gameData.teams.length === 1 && !hasSelectedTeam) {
-      setSelectedTeamId(gameData.teams[0].id);
-      setHasSelectedTeam(true);
+    if (!hasSelectedTeam && gameData?.teams) {
+      // First, try to get team ID from localStorage (from team creation)
+      const storedTeamId = localStorage.getItem('selectedTeamId');
+      if (storedTeamId && gameData.teams.find((t: any) => t.id === storedTeamId)) {
+        setSelectedTeamId(storedTeamId);
+        setHasSelectedTeam(true);
+        localStorage.removeItem('selectedTeamId'); // Clean up after use
+        return;
+      }
+
+      // Fallback: auto-select if only one team
+      if (gameData.teams.length === 1) {
+        setSelectedTeamId(gameData.teams[0].id);
+        setHasSelectedTeam(true);
+      }
     }
   }, [gameData?.teams, hasSelectedTeam]);
 
