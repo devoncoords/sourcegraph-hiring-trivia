@@ -74,6 +74,7 @@ export default function MultiplayerGameBoard({
                 gamePhase: 'PLAYING',
                 currentRound: 0,
                 currentQuestion: 0,
+                showResults: false,
                 timerEndsAt: new Date(Date.now() + 30000).toISOString()
               })
             });

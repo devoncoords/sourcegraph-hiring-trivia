@@ -23,6 +23,13 @@ export default function HostControls({
   const [showResults, setShowResults] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
+  // Reset local showResults when game state changes
+  useEffect(() => {
+    if (game.showResults !== undefined) {
+      setShowResults(game.showResults);
+    }
+  }, [game.showResults, game.currentRound, game.currentQuestion]);
+
   // Calculate time left from timerEndsAt
   useEffect(() => {
     if (!game.timerEndsAt || showResults || game.showResults) return;
@@ -33,8 +40,8 @@ export default function HostControls({
       const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
       setTimeLeft(remaining);
 
-      if (remaining === 0 && !showResults) {
-        setShowResults(true);
+      if (remaining === 0 && !showResults && !game.showResults) {
+        // Time's up sound but don't auto-reveal - let host control
         if (soundEnabled) {
           gameSounds.playTimeUp();
         }
@@ -144,6 +151,7 @@ export default function HostControls({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         gamePhase: 'PLAYING',
+        showResults: false,
         timerEndsAt: new Date(Date.now() + timerDuration * 1000).toISOString()
       })
     });
