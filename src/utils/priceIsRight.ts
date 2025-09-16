@@ -19,7 +19,7 @@ export function parseNumberFromText(text: string): number | null {
 export function calculatePriceIsRightWinner(
   teamGuesses: TeamGuess[],
   correctAnswer: number
-): { winners: TeamGuess[]; results: TeamGuess[] } {
+): { winners: TeamGuess[]; results: TeamGuess[]; allWentOver: boolean } {
   
   // Parse and validate all guesses
   const validGuesses = teamGuesses
@@ -36,7 +36,8 @@ export function calculatePriceIsRightWinner(
     // No one was under or equal - everyone went over
     return { 
       winners: [], 
-      results: validGuesses.sort((a, b) => Math.abs(a.guess - correctAnswer) - Math.abs(b.guess - correctAnswer))
+      results: validGuesses.sort((a, b) => Math.abs(a.guess - correctAnswer) - Math.abs(b.guess - correctAnswer)),
+      allWentOver: true
     };
   }
 
@@ -44,14 +45,19 @@ export function calculatePriceIsRightWinner(
   const winningGuess = Math.max(...validBids.map(team => team.guess));
   const winners = validBids.filter(team => team.guess === winningGuess);
 
-  // Sort results by distance from correct answer for display
+  // Sort results by closest to answer, with valid bids first
   const sortedResults = validGuesses.sort((a, b) => {
+    // Valid bids (under or equal) come first, sorted by closeness
+    if (a.guess <= correctAnswer && b.guess > correctAnswer) return -1;
+    if (a.guess > correctAnswer && b.guess <= correctAnswer) return 1;
+    
+    // Both valid or both over - sort by distance
     const distanceA = Math.abs(a.guess - correctAnswer);
     const distanceB = Math.abs(b.guess - correctAnswer);
     return distanceA - distanceB;
   });
 
-  return { winners, results: sortedResults };
+  return { winners, results: sortedResults, allWentOver: false };
 }
 
 export function formatNumberWithCommas(num: number): string {

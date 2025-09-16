@@ -57,9 +57,9 @@ export async function POST(
     let finalAnswerIndex = answerIndex;
 
     if (question.type === 'open-ended' && textAnswer !== undefined) {
-      // For open-ended questions, store the text answer and mark as correct for participation
-      // Actual scoring will be done manually by comparing guesses to correctValue
-      isCorrect = true; // Give points for participation in open-ended questions
+      // For open-ended questions, store the text answer but don't auto-award points
+      // Scoring will be done manually via Price is Right scoring system
+      isCorrect = false; // No automatic points for open-ended questions
       finalAnswerIndex = -1; // Use -1 to indicate text answer
     } else if (answerIndex !== undefined) {
       // Regular multiple choice scoring

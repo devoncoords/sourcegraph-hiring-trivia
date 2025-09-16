@@ -55,7 +55,7 @@ export async function POST(
     });
 
     // Calculate Price is Right winner
-    const { winners, results } = calculatePriceIsRightWinner(
+    const { winners, results, allWentOver } = calculatePriceIsRightWinner(
       teamGuesses,
       finalQuestion.correctValue || 26196
     );
@@ -98,7 +98,8 @@ export async function POST(
       correctAnswer: finalQuestion.correctValue,
       winners: winners,
       results: results,
-      pointsAwarded: pointsToAward
+      allWentOver: allWentOver,
+      pointsAwarded: winnerIds.length > 0 ? pointsToAward : 0
     });
 
   } catch (error) {

@@ -204,13 +204,27 @@ export default function HostControls({
       const data = await response.json();
 
       if (response.ok) {
-        // Show success message or update UI
-        if (data.winners && data.winners.length > 0) {
+        // Show detailed results with all team guesses
+        let message = `🎯 Correct Answer: ${data.correctAnswer.toLocaleString()}\n\n`;
+        
+        if (data.allWentOver) {
+          message += `🚫 All teams went over! No points awarded.\n\n`;
+        } else if (data.winners && data.winners.length > 0) {
           const winnerNames = data.winners.map((w: any) => w.teamName).join(', ');
-          alert(`🏆 Final Round Winner(s): ${winnerNames}!\nClosest to ${data.correctAnswer.toLocaleString()} without going over!`);
-        } else {
-          alert(`🚫 No winners - all teams went over ${data.correctAnswer.toLocaleString()}!`);
+          message += `🏆 Winner(s): ${winnerNames}\n`;
+          message += `Winning guess: ${data.winners[0].guess.toLocaleString()}\n`;
+          message += `Points awarded: ${data.pointsAwarded}\n\n`;
         }
+        
+        // Show all team results
+        message += `📊 All Team Guesses:\n`;
+        data.results.forEach((team: any) => {
+          const status = team.guess > data.correctAnswer ? '❌ OVER' : 
+                        data.winners.some((w: any) => w.teamId === team.teamId) ? '🏆 WINNER' : '✅ Valid';
+          message += `${team.teamName}: ${team.guess.toLocaleString()} ${status}\n`;
+        });
+        
+        alert(message);
       } else {
         alert('Failed to score final round: ' + data.error);
       }
