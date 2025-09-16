@@ -8,7 +8,6 @@ interface HostSetupProps {
 
 export default function HostSetup({ onGameCreated }: HostSetupProps) {
   const [hostName, setHostName] = useState('');
-  const [maxTeams, setMaxTeams] = useState(6);
   const [isCreating, setIsCreating] = useState(false);
 
   const createGame = async () => {
@@ -26,8 +25,7 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          hostName: hostName.trim(),
-          maxTeams: maxTeams
+          hostName: hostName.trim()
         })
       });
 
@@ -57,7 +55,7 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
             Create a multiplayer Sourcegraph Hiring Trivia game!
           </p>
           <p className="text-lg text-vermilion-400 font-ui">
-            Teams will join using their devices
+            Unlimited teams can join using their devices
           </p>
         </div>
 
@@ -77,24 +75,12 @@ export default function HostSetup({ onGameCreated }: HostSetupProps) {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Maximum Number of Teams
-            </label>
-            <select
-              value={maxTeams}
-              onChange={(e) => setMaxTeams(parseInt(e.target.value))}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-vermilion-500 focus:ring-1 focus:ring-vermilion-500"
-            >
-              <option value={3}>3 teams</option>
-              <option value={4}>4 teams</option>
-              <option value={5}>5 teams</option>
-              <option value={6}>6 teams</option>
-              <option value={8}>8 teams</option>
-              <option value={10}>10 teams</option>
-            </select>
-            <p className="text-xs text-gray-400 mt-1">
-              Teams will create their own names when they join
-            </p>
+            <div className="bg-green-900 rounded-lg p-4 border border-green-700">
+              <h3 className="text-green-200 font-semibold mb-2">♾️ Unlimited Teams!</h3>
+              <p className="text-green-100 text-sm">
+                Any number of teams can join this game. Teams will create their own names when they join using the game code.
+              </p>
+            </div>
           </div>
 
           <div className="bg-blue-900 rounded-lg p-4 mb-6 border border-blue-700">

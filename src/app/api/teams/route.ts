@@ -46,14 +46,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check team limit (default to 10 if not specified)
-    const maxTeams = 10; // Could be stored in game model if needed
-    if (game.teams.length >= maxTeams) {
-      return NextResponse.json(
-        { error: 'Game is full - maximum number of teams reached' },
-        { status: 400 }
-      );
-    }
+    // No team limit - unlimited teams can join
 
     // Create the team
     const team = await prisma.team.create({

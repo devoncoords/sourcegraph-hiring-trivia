@@ -5,7 +5,7 @@ import { generateGameCode } from '@/lib/gameUtils';
 // Create a new game
 export async function POST(request: NextRequest) {
   try {
-    const { hostName, maxTeams } = await request.json();
+    const { hostName } = await request.json();
 
     if (!hostName) {
       return NextResponse.json(
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    return NextResponse.json({ game, maxTeams });
+    return NextResponse.json({ game });
   } catch (error) {
     console.error('Error creating game:', error);
     return NextResponse.json(

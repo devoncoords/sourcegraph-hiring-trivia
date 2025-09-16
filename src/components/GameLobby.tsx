@@ -46,7 +46,7 @@ export default function GameLobby({ game, gameCode, isHost, onStartGame, onLeave
         </div>
 
         <div className="bg-gray-900 rounded-lg p-6 mb-6 border border-gray-800">
-          <h3 className="text-2xl font-semibold mb-4 text-center">Teams Ready to Play</h3>
+          <h3 className="text-2xl font-semibold mb-4 text-center">Teams Ready to Play (Unlimited)</h3>
           {game.teams && game.teams.length > 0 ? (
             <div className="grid gap-4">
               {game.teams.map((team: any, index: number) => (
