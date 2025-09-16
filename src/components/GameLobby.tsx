@@ -19,27 +19,42 @@ export default function GameLobby({ game, gameCode, isHost, onStartGame, onLeave
             🎯 Game Lobby
           </h1>
           {gameCode && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-vermilion-500 rounded-lg p-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Join Code:</h2>
-                <p className="text-4xl font-mono text-white font-bold tracking-widest">
-                  {gameCode}
-                </p>
-                <p className="text-white mt-2">
-                  Share this code with teams to join the game
-                </p>
-              </div>
-              
-              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-                <h3 className="text-xl font-bold text-white mb-4 text-center">
-                  📱 Scan to Join
-                </h3>
-                <div className="flex justify-center">
-                  <QRCodeGenerator gameCode={gameCode} size={180} />
+            <div className="space-y-6 mb-6">
+              <div className="bg-blue-900 rounded-lg p-6 border border-blue-700">
+                <h2 className="text-2xl font-bold text-blue-200 mb-4 text-center">🌐 Join the Game</h2>
+                <div className="text-center">
+                  <p className="text-blue-100 text-lg mb-2">Visit this website:</p>
+                  <p className="text-2xl font-mono text-white font-bold bg-blue-800 rounded-lg p-3 mb-3">
+                    sourcegraph-hiring-trivia.vercel.app
+                  </p>
+                  <p className="text-blue-200 text-sm">
+                    Then click &quot;Join Game&quot; and enter the code below
+                  </p>
                 </div>
-                <p className="text-gray-300 text-sm mt-3 text-center">
-                  Scan with phone camera to join instantly
-                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-vermilion-500 rounded-lg p-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">Join Code:</h2>
+                  <p className="text-4xl font-mono text-white font-bold tracking-widest">
+                    {gameCode}
+                  </p>
+                  <p className="text-white mt-2">
+                    Enter this code after visiting the website
+                  </p>
+                </div>
+                
+                <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                  <h3 className="text-xl font-bold text-white mb-4 text-center">
+                    📱 Or Scan QR Code
+                  </h3>
+                  <div className="flex justify-center">
+                    <QRCodeGenerator gameCode={gameCode} size={180} />
+                  </div>
+                  <p className="text-gray-300 text-sm mt-3 text-center">
+                    Scan to join instantly
+                  </p>
+                </div>
               </div>
             </div>
           )}
