@@ -41,8 +41,7 @@ export default function HostControls({
     setShowResults(true);
   }, [gameId]);
 
-  // Auto-reveal when all teams have answered (disabled temporarily to debug)
-  /*
+  // Auto-reveal when all teams have answered
   useEffect(() => {
     if (!game.teams || game.teams.length === 0 || showResults || game.showResults || !game.timerEndsAt) return;
 
@@ -64,7 +63,6 @@ export default function HostControls({
       }, 1000);
     }
   }, [game.answers, game.teams, game.currentRound, game.currentQuestion, showResults, game.showResults, game.timerEndsAt, revealAnswers]);
-  */
 
   // Calculate time left from timerEndsAt
   useEffect(() => {
