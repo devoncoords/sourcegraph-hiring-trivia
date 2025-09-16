@@ -43,7 +43,7 @@ export default function HostControls({
 
   // Auto-reveal when all teams have answered
   useEffect(() => {
-    if (!game.teams || game.teams.length === 0 || showResults || game.showResults) return;
+    if (!game.teams || game.teams.length === 0 || showResults || game.showResults || !game.timerEndsAt) return;
 
     // Check if all teams have submitted answers for current question
     const currentQuestionAnswers = game.answers?.filter((a: any) => 
@@ -53,7 +53,8 @@ export default function HostControls({
     const teamsWithAnswers = new Set(currentQuestionAnswers.map((a: any) => a.teamId));
     const allTeamsAnswered = game.teams.every((team: any) => teamsWithAnswers.has(team.id));
 
-    if (allTeamsAnswered && game.teams.length > 0) {
+    // Only auto-reveal if timer is active and all teams have answered
+    if (allTeamsAnswered && game.teams.length > 0 && game.timerEndsAt) {
       // Small delay to let the UI update, then auto-reveal
       setTimeout(() => {
         if (!showResults && !game.showResults) {
@@ -61,7 +62,7 @@ export default function HostControls({
         }
       }, 1000);
     }
-  }, [game.answers, game.teams, game.currentRound, game.currentQuestion, showResults, game.showResults, revealAnswers]);
+  }, [game.answers, game.teams, game.currentRound, game.currentQuestion, showResults, game.showResults, game.timerEndsAt, revealAnswers]);
 
   // Calculate time left from timerEndsAt
   useEffect(() => {

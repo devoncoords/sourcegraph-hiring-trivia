@@ -160,8 +160,8 @@ export const triviaRounds: Round[] = [
         options: [], // No options for open-ended
         correctAnswer: -1, // Not used for open-ended
         type: 'open-ended',
-        correctValue: 26010,
-        explanation: "The actual number is 26,010 applications since January 1, 2025. In Price is Right style, the closest guess without going over wins!"
+        correctValue: 26196,
+        explanation: "The actual number is 26,196 applications since January 1, 2025. In Price is Right style, the closest guess without going over wins!"
       }
     ]
   }
