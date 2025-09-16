@@ -152,7 +152,7 @@ export const triviaRounds: Round[] = [
     title: "Final Round: Price is Right!",
     theme: "Closest answer wins",
     emoji: "⚡",
-    pointsPerQuestion: 50, // Big points for final round
+    pointsPerQuestion: 20, // Final round points
     questions: [
       {
         id: 22,
