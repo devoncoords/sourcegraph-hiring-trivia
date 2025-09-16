@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { formatQuestionText } from '@/utils/formatText';
 import { gameSounds, enableAudio } from '@/utils/sounds';
 
@@ -29,6 +29,39 @@ export default function HostControls({
       setShowResults(game.showResults);
     }
   }, [game.showResults, game.currentRound, game.currentQuestion]);
+
+  const revealAnswers = useCallback(async () => {
+    await fetch(`/api/games/${gameId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        showResults: true
+      })
+    });
+    setShowResults(true);
+  }, [gameId]);
+
+  // Auto-reveal when all teams have answered
+  useEffect(() => {
+    if (!game.teams || game.teams.length === 0 || showResults || game.showResults) return;
+
+    // Check if all teams have submitted answers for current question
+    const currentQuestionAnswers = game.answers?.filter((a: any) => 
+      a.roundId === game.currentRound && a.questionId === game.currentQuestion
+    ) || [];
+
+    const teamsWithAnswers = new Set(currentQuestionAnswers.map((a: any) => a.teamId));
+    const allTeamsAnswered = game.teams.every((team: any) => teamsWithAnswers.has(team.id));
+
+    if (allTeamsAnswered && game.teams.length > 0) {
+      // Small delay to let the UI update, then auto-reveal
+      setTimeout(() => {
+        if (!showResults && !game.showResults) {
+          revealAnswers();
+        }
+      }, 1000);
+    }
+  }, [game.answers, game.teams, game.currentRound, game.currentQuestion, showResults, game.showResults, revealAnswers]);
 
   // Calculate time left from timerEndsAt
   useEffect(() => {
@@ -87,17 +120,6 @@ export default function HostControls({
       })
     });
     setShowResults(false);
-  };
-
-  const revealAnswers = async () => {
-    await fetch(`/api/games/${gameId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        showResults: true
-      })
-    });
-    setShowResults(true);
   };
 
   const nextQuestion = async () => {

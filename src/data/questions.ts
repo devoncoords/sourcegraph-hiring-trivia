@@ -11,7 +11,7 @@ export const triviaRounds: Round[] = [
     questions: [
       {
         id: 1,
-        text: "Fact or Fiction: On average, 40% of candidates who start a job application actually finish it.",
+        text: "Fact or Fiction: On average, 50% of candidates who start a job application actually finish it.",
         options: ["Fact", "Fiction"],
         correctAnswer: 1,
         explanation: "Fiction: The reality is much lower — only about 30% of candidates finish an application."
