@@ -208,11 +208,12 @@ export default function HostControls({
         let message = `🎯 Correct Answer: ${data.correctAnswer.toLocaleString()}\n\n`;
         
         if (data.allWentOver) {
-          message += `🚫 All teams went over! No points awarded.\n\n`;
+          message += `🚫 All teams went over 26,196! No winner.\n\n`;
         } else if (data.winners && data.winners.length > 0) {
-          const winnerNames = data.winners.map((w: any) => w.teamName).join(', ');
-          message += `🏆 Winner(s): ${winnerNames}\n`;
-          message += `Winning guess: ${data.winners[0].guess.toLocaleString()}\n`;
+          const winner = data.winners[0]; // Should only be one winner
+          message += `🏆 Winner: ${winner.teamName}\n`;
+          message += `Winning guess: ${winner.guess.toLocaleString()}\n`;
+          message += `(Closest to 26,196 without going over)\n`;
           message += `Points awarded: ${data.pointsAwarded}\n\n`;
         }
         

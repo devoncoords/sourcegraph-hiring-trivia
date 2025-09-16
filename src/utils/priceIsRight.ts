@@ -29,11 +29,11 @@ export function calculatePriceIsRightWinner(
     }))
     .filter(team => team.guess > 0); // Remove invalid guesses
 
-  // Find guesses that don't go over
+  // Classic Price is Right: Find guesses that don't go over
   const validBids = validGuesses.filter(team => team.guess <= correctAnswer);
   
   if (validBids.length === 0) {
-    // No one was under or equal - everyone went over
+    // No one was under or equal - everyone went over, no winner
     return { 
       winners: [], 
       results: validGuesses.sort((a, b) => Math.abs(a.guess - correctAnswer) - Math.abs(b.guess - correctAnswer)),
@@ -45,13 +45,13 @@ export function calculatePriceIsRightWinner(
   const winningGuess = Math.max(...validBids.map(team => team.guess));
   const winners = validBids.filter(team => team.guess === winningGuess);
 
-  // Sort results by closest to answer, with valid bids first
+  // Sort results: valid bids first (sorted by closeness), then over bids
   const sortedResults = validGuesses.sort((a, b) => {
-    // Valid bids (under or equal) come first, sorted by closeness
+    // Valid bids (under or equal) come first
     if (a.guess <= correctAnswer && b.guess > correctAnswer) return -1;
     if (a.guess > correctAnswer && b.guess <= correctAnswer) return 1;
     
-    // Both valid or both over - sort by distance
+    // Both valid or both over - sort by closeness
     const distanceA = Math.abs(a.guess - correctAnswer);
     const distanceB = Math.abs(b.guess - correctAnswer);
     return distanceA - distanceB;
