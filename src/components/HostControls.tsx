@@ -68,7 +68,7 @@ export default function HostControls({
   };
 
   const startTimer = async () => {
-    const timerDuration = currentRound?.id === 4 ? 60 : 30; // Final round gets 60 seconds
+    const timerDuration = currentRound?.id === 4 ? 60 : 30; // Only Final Round (Round 4) gets 60 seconds
     
     // Enable audio and play round start sound
     if (!soundEnabled) {
@@ -128,7 +128,7 @@ export default function HostControls({
       });
     } else {
       // Next question with automatic timer start
-      const timerDuration = game.currentRound === 3 ? 60 : 30; // Round 4 gets 60 seconds
+      const timerDuration = currentRound?.id === 4 ? 60 : 30; // Only Final Round (Round 4) gets 60 seconds
       
       await fetch(`/api/games/${gameId}`, {
         method: 'PATCH',
@@ -144,7 +144,7 @@ export default function HostControls({
   };
 
   const startNextRound = async () => {
-    const timerDuration = game.currentRound + 1 === 3 ? 60 : 30; // Round 4 (index 3) gets 60 seconds
+    const timerDuration = game.currentRound === 3 ? 60 : 30; // Only Final Round (Round 4, index 3) gets 60 seconds
     
     await fetch(`/api/games/${gameId}`, {
       method: 'PATCH',
