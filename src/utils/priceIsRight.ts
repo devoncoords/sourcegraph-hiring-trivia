@@ -23,17 +23,26 @@ export function calculatePriceIsRightWinner(
   
   // Parse and validate all guesses
   const validGuesses = teamGuesses
-    .map(team => ({
-      ...team,
-      guess: parseNumberFromText(team.originalText) || 0
-    }))
+    .map(team => {
+      const parsedGuess = parseNumberFromText(team.originalText) || 0;
+      console.log(`Parsing ${team.teamName}: "${team.originalText}" → ${parsedGuess}`);
+      return {
+        ...team,
+        guess: parsedGuess
+      };
+    })
     .filter(team => team.guess > 0); // Remove invalid guesses
+
+  console.log('Valid guesses after parsing:', validGuesses);
 
   // Classic Price is Right: Find guesses that don't go over
   const validBids = validGuesses.filter(team => team.guess <= correctAnswer);
   
+  console.log(`Valid bids (≤ ${correctAnswer}):`, validBids);
+  
   if (validBids.length === 0) {
     // No one was under or equal - everyone went over, no winner
+    console.log('All teams went over! No winner.');
     return { 
       winners: [], 
       results: validGuesses.sort((a, b) => Math.abs(a.guess - correctAnswer) - Math.abs(b.guess - correctAnswer)),
@@ -44,6 +53,8 @@ export function calculatePriceIsRightWinner(
   // Find the highest bid that doesn't go over (classic Price is Right)
   const winningGuess = Math.max(...validBids.map(team => team.guess));
   const winners = validBids.filter(team => team.guess === winningGuess);
+  
+  console.log(`Winning guess: ${winningGuess}, Winners:`, winners);
 
   // Sort results: valid bids first (sorted by closeness), then over bids
   const sortedResults = validGuesses.sort((a, b) => {

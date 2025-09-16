@@ -46,13 +46,19 @@ export async function POST(
     // Prepare team guesses
     const teamGuesses: TeamGuess[] = game.teams.map((team: any) => {
       const answer = game.answers.find((a: any) => a.teamId === team.id);
+      const originalText = answer?.textAnswer || '0';
+      
+      console.log(`Team ${team.name}: Original="${originalText}", Answer object:`, answer);
+      
       return {
         teamId: team.id,
         teamName: team.name,
-        guess: 0, // Will be calculated
-        originalText: answer?.textAnswer || '0'
+        guess: 0, // Will be calculated in utility function
+        originalText: originalText
       };
     });
+
+    console.log('Team guesses prepared:', teamGuesses);
 
     // Calculate Price is Right winner
     const { winners, results, allWentOver } = calculatePriceIsRightWinner(
