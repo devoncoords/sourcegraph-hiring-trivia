@@ -76,17 +76,16 @@ export const triviaRounds: Round[] = [
       },
       {
         id: 7,
-        text: "This interview is meant to assess if you will be a value-add to the team, take and give constructive criticism, and be an overall supportive team member.",
+        text: "This interview is meant to assess how you communicate and collaborate with teammates within Sourcegraph.",
         options: [
           "Recruiter Screen",
           "Hiring Manager Screen",
           "Resume Deep Dive",
-          "Peer Interview",
           "Cross-functional Team Collaboration Interview",
           "Values Interview"
         ],
         correctAnswer: 3,
-        explanation: "The Peer Interview is designed to assess team fit, ability to give and receive constructive feedback, and collaborative team dynamics."
+        explanation: "During this stage of the interview process, you will meet with members of another team with whom you would partner regularly. The goal of this interview is to understand how you communicate and collaborate with cross-functional partners within Sourcegraph."
       },
       {
         id: 8,
