@@ -85,7 +85,7 @@ export const triviaRounds: Round[] = [
           "Values Interview"
         ],
         correctAnswer: 3,
-        explanation: "During this stage of the interview process, you will meet with members of another team with whom you would partner regularly. The goal of this interview is to understand how you communicate and collaborate with cross-functional partners within Sourcegraph."
+        explanation: "During this stage of the interview process, candidates meet with members of another team with whom they would partner regularly. The goal of this interview is to understand how they communicate and collaborate with cross-functional partners within Sourcegraph."
       },
       {
         id: 8,
