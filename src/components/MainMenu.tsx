@@ -51,17 +51,7 @@ export default function MainMenu({ onHostGame, onJoinGame }: MainMenuProps) {
           </div>
         </div>
 
-        <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h3 className="text-xl font-semibold mb-4 text-vermilion-500">
-            📋 Game Rules
-          </h3>
-          <div className="space-y-3 text-sm text-gray-300">
-            <p>• <strong>Get into teams.</strong> No more than 5 people per team, and you can be a team of 1.</p>
-            <p>• <strong>You have 30 seconds to choose your team name</strong> or else you will randomly be assigned a notoriously slow language or IDE.</p>
-            <p>• <strong>There are 4 rounds of questions</strong> with 4 questions each.</p>
-            <p>• <strong>You&apos;ll have 30 seconds to answer.</strong> Once you select your answer, you can&apos;t change it.</p>
-          </div>
-        </div>
+
 
         <div className="mt-8 text-center">
           <Link 
