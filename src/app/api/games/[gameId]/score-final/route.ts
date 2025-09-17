@@ -1,111 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { triviaRounds } from '@/data/questions';
-import { calculatePriceIsRightWinner, parseNumberFromText, TeamGuess } from '@/utils/priceIsRight';
 
-// Calculate Price is Right scoring for final round
+// Manual winner selection for final round
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ gameId: string }> }
 ) {
   try {
     const { gameId } = await params;
+    const { winnerId } = await request.json();
 
-    // Get the game with all teams and answers
-    const game = await prisma.game.findUnique({
-      where: { id: gameId },
-      include: {
-        teams: true,
-        answers: {
-          where: {
-            roundId: 3, // Final round (0-indexed)
-            questionId: 22 // Final question
-          }
-        }
-      }
-    });
-
-    if (!game) {
+    if (!winnerId) {
       return NextResponse.json(
-        { error: 'Game not found' },
-        { status: 404 }
-      );
-    }
-
-    // Get the final question
-    const finalRound = triviaRounds[3]; // Round 4 (0-indexed)
-    const finalQuestion = finalRound?.questions[0]; // Only one question in final round
-
-    if (!finalQuestion || finalQuestion.type !== 'open-ended') {
-      return NextResponse.json(
-        { error: 'Final question not found or not open-ended' },
+        { error: 'Winner team ID is required' },
         { status: 400 }
       );
     }
 
-    // Prepare team guesses
-    const teamGuesses: TeamGuess[] = game.teams.map((team: any) => {
-      const answer = game.answers.find((a: any) => a.teamId === team.id);
-      const originalText = answer?.textAnswer || '0';
-      
-      console.log(`Team ${team.name}: Original="${originalText}", Answer object:`, answer);
-      
-      return {
-        teamId: team.id,
-        teamName: team.name,
-        guess: 0, // Will be calculated in utility function
-        originalText: originalText
-      };
+    // Verify the winner team exists in this game
+    const team = await prisma.team.findFirst({
+      where: { 
+        id: winnerId,
+        gameId: gameId
+      }
     });
 
-    console.log('Team guesses prepared:', teamGuesses);
-
-    // Calculate Price is Right winner
-    const { winners, results, allWentOver } = calculatePriceIsRightWinner(
-      teamGuesses,
-      finalQuestion.correctValue || 26196
-    );
-
-    // Award points to winners
-    const pointsToAward = finalRound.pointsPerQuestion;
-    const winnerIds = winners.map(w => w.teamId);
-
-    if (winnerIds.length > 0) {
-      // Update winner team scores
-      await prisma.team.updateMany({
-        where: {
-          id: { in: winnerIds },
-          gameId: gameId
-        },
-        data: {
-          score: {
-            increment: pointsToAward
-          }
-        }
-      });
-
-      // Update answer records to mark winners as correct
-      await prisma.answer.updateMany({
-        where: {
-          gameId: gameId,
-          teamId: { in: winnerIds },
-          roundId: 3,
-          questionId: 22
-        },
-        data: {
-          isCorrect: true,
-          pointsAwarded: pointsToAward
-        }
-      });
+    if (!team) {
+      return NextResponse.json(
+        { error: 'Winner team not found in this game' },
+        { status: 404 }
+      );
     }
+
+    const pointsToAward = 20; // Fixed 20 points for final round winner
+
+    // Award points to the selected winner
+    await prisma.team.update({
+      where: { id: winnerId },
+      data: {
+        score: {
+          increment: pointsToAward
+        }
+      }
+    });
+
+    // Update the answer record for the winner
+    await prisma.answer.updateMany({
+      where: {
+        gameId: gameId,
+        teamId: winnerId,
+        roundId: 3, // Final round (0-indexed)
+        questionId: 22 // Final question
+      },
+      data: {
+        isCorrect: true,
+        pointsAwarded: pointsToAward
+      }
+    });
 
     return NextResponse.json({
       success: true,
-      correctAnswer: finalQuestion.correctValue,
-      winners: winners,
-      results: results,
-      allWentOver: allWentOver,
-      pointsAwarded: winnerIds.length > 0 ? pointsToAward : 0
+      winnerTeam: team,
+      pointsAwarded: pointsToAward
     });
 
   } catch (error) {

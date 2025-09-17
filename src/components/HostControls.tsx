@@ -192,44 +192,27 @@ export default function HostControls({
     }
   };
 
-  const scoreFinalRound = async () => {
+  const [showFinalScoring, setShowFinalScoring] = useState(false);
+
+  const selectWinner = async (teamId: string, teamName: string) => {
     try {
       const response = await fetch(`/api/games/${gameId}/score-final`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ winnerId: teamId })
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Show detailed results with all team guesses
-        let message = `🎯 Correct Answer: ${data.correctAnswer.toLocaleString()}\n\n`;
-        
-        if (data.allWentOver) {
-          message += `🚫 All teams went over 26,196! No winner.\n\n`;
-        } else if (data.winners && data.winners.length > 0) {
-          const winner = data.winners[0]; // Should only be one winner
-          message += `🏆 Winner: ${winner.teamName}\n`;
-          message += `Winning guess: ${winner.guess.toLocaleString()}\n`;
-          message += `(Closest to 26,196 without going over)\n`;
-          message += `Points awarded: ${data.pointsAwarded}\n\n`;
-        }
-        
-        // Show all team results
-        message += `📊 All Team Guesses:\n`;
-        data.results.forEach((team: any) => {
-          const status = team.guess > data.correctAnswer ? '❌ OVER' : 
-                        data.winners.some((w: any) => w.teamId === team.teamId) ? '🏆 WINNER' : '✅ Valid';
-          message += `${team.teamName}: ${team.guess.toLocaleString()} ${status}\n`;
-        });
-        
-        alert(message);
+        alert(`🏆 ${teamName} wins the final round!\n+${data.pointsAwarded} points awarded!`);
+        setShowFinalScoring(false);
       } else {
-        alert('Failed to score final round: ' + data.error);
+        alert('Failed to award points: ' + data.error);
       }
     } catch (error) {
-      console.error('Error scoring final round:', error);
-      alert('Failed to score final round');
+      console.error('Error awarding points:', error);
+      alert('Failed to award points');
     }
   };
 
@@ -355,7 +338,9 @@ export default function HostControls({
 
         {/* Team Answers Summary */}
         <div className="bg-gray-900 rounded-lg p-6 mb-6 border border-gray-800">
-          <h3 className="text-xl font-semibold mb-4">Team Responses</h3>
+          <h3 className="text-xl font-semibold mb-4">
+            {currentRound?.id === 4 && showFinalScoring ? 'Click to Choose Winner (20 points)' : 'Team Responses'}
+          </h3>
           <div className="grid gap-3">
             {game.teams.map((team: any) => {
               const teamAnswer = game.answers?.find(
@@ -365,7 +350,19 @@ export default function HostControls({
               );
               
               return (
-                <div key={team.id} className="flex justify-between items-center bg-gray-800 rounded-lg p-3">
+                <div 
+                  key={team.id} 
+                  className={`flex justify-between items-center rounded-lg p-3 transition-colors ${
+                    currentRound?.id === 4 && showFinalScoring 
+                      ? 'bg-yellow-800 border-2 border-yellow-500 hover:bg-yellow-700 cursor-pointer'
+                      : 'bg-gray-800'
+                  }`}
+                  onClick={() => {
+                    if (currentRound?.id === 4 && showFinalScoring) {
+                      selectWinner(team.id, team.name);
+                    }
+                  }}
+                >
                   <div className="flex items-center space-x-3">
                     <div 
                       className="w-4 h-4 rounded-full"
@@ -396,6 +393,9 @@ export default function HostControls({
                         <span className="text-gray-400 text-sm">Waiting...</span>
                       )}
                     </div>
+                    {currentRound?.id === 4 && showFinalScoring && (
+                      <span className="text-yellow-200 font-bold">👈 Click to Win!</span>
+                    )}
                   </div>
                 </div>
               );
@@ -426,24 +426,34 @@ export default function HostControls({
 
             {(timeLeft === 0 || showResults || game.showResults) && (
               <div className="space-x-3">
-                {currentRound?.id === 4 && game.showResults && (
+                {currentRound?.id === 4 && game.showResults && !showFinalScoring && (
                   <button
-                    onClick={scoreFinalRound}
+                    onClick={() => setShowFinalScoring(true)}
                     className="px-6 py-3 bg-yellow-600 text-white font-semibold rounded-lg hover:bg-yellow-700 transition-colors"
                   >
-                    🏆 Score Price is Right!
+                    🏆 Choose Final Round Winner
                   </button>
                 )}
-                <button
-                  onClick={nextQuestion}
-                  className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
-                >
-                  {game.currentQuestion + 1 < currentRound.questions.length
-                    ? 'Next Question →'
-                    : game.currentRound + 1 < 4
-                    ? 'Next Round →'
-                    : 'Finish Game 🏆'}
-                </button>
+                {currentRound?.id === 4 && showFinalScoring && (
+                  <button
+                    onClick={() => setShowFinalScoring(false)}
+                    className="px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    ← Cancel Winner Selection
+                  </button>
+                )}
+                {!showFinalScoring && (
+                  <button
+                    onClick={nextQuestion}
+                    className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    {game.currentQuestion + 1 < currentRound.questions.length
+                      ? 'Next Question →'
+                      : game.currentRound + 1 < 4
+                      ? 'Next Round →'
+                      : 'Finish Game 🏆'}
+                  </button>
+                )}
               </div>
             )}
           </div>
